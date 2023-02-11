@@ -12,7 +12,6 @@ export const socket: NextWebSocketHandler = (client, req) => {
     if (id) {
       clients.set(id, client);
 
-      // Remove the client from the set when it disconnects
       client.on('close', () => {
         console.log('Client disconnected');
         clients.delete(id);
@@ -21,7 +20,6 @@ export const socket: NextWebSocketHandler = (client, req) => {
   }
 };
 
-// When you call the API route, broadcast to all clients, for example
 const handler: NextApiHandler = (_req, res) => {
   res.status(405).end();
 };
