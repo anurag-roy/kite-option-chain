@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "next": "13.1.6",
+    "next-plugin-websocket": "^0.1.1",
     "react": "18.2.0",
     "react-dom": "18.2.0"
   },
