@@ -1,4 +1,4 @@
-import { getKeys } from '@/util';
+import { getKeys } from '@/utils';
 import Database from 'better-sqlite3';
 import { kc } from './globals/kc';
 
