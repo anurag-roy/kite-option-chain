@@ -5,22 +5,32 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "data:prepare": "rimraf src/data/data.db && tsx src/setupDb.ts"
   },
   "dependencies": {
-    "kiteconnect-ts": "^0.4.0",
+    "@prisma/client": "^4.10.1",
+    "better-sqlite3": "^8.1.0",
+    "kiteconnect-ts": "^0.4.1",
     "next": "13.1.6",
     "next-plugin-websocket": "^0.1.1",
     "react": "18.2.0",
     "react-dom": "18.2.0"
   },
   "devDependencies": {
+    "@types/better-sqlite3": "^7.6.3",
     "@types/node": "^18.13.0",
     "@types/react": "^18.0.28",
     "@types/react-dom": "^18.0.10",
     "autoprefixer": "^10.4.13",
     "postcss": "^8.4.21",
+    "prisma": "^4.10.1",
+    "rimraf": "^4.1.2",
     "tailwindcss": "^3.2.6",
+    "tsx": "^3.12.3",
     "typescript": "^4.9.5"
+  },
+  "prisma": {
+    "schema": "src/prisma/schema.prisma"
   }
 }
