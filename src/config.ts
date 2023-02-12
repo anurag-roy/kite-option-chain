@@ -37,7 +37,7 @@ export const groups = {
   'Hospital Labs': ['AUROPHARMA', 'DIVISLAB', 'DRREDDY', 'IPCALAB'],
   'Banking Finance (Private)': ['IBULHSGFIN', 'ICICIGI', 'L&TFH', 'MANAPPURAM'],
   'Banking Finance (Public)': ['SBIN', 'CUB', 'FEDERALBNK', 'IDFCFIRSTB'],
-} as const;
+};
 
 // Number of months to show in the expiry dropdown
 export const EXPIRY_OPTION_LENGTH = 3;

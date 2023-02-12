@@ -1,5 +1,5 @@
-import { Form } from '@/components/Form';
 import { Header } from '@/components/Header';
+import { Main } from '@/components/Main';
 import { kc } from '@/globals/kc';
 import { GetServerSidePropsContext } from 'next';
 import Head from 'next/head';
@@ -39,9 +39,7 @@ export default function Home({ status, data }: HomeProps) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Header status={status} data={data} />
-      <main className="mt-6 rounded-lg py-6 bg-gray-100 grow overflow-y-auto flex flex-col">
-        <Form />
-      </main>
+      <Main />
     </>
   );
 }

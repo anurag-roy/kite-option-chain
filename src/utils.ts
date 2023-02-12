@@ -11,16 +11,18 @@ const getMonthNameFronIndex = (monthIndex: number) => {
   return formatter.format(new Date(1970, monthIndex, 1));
 };
 
+export type ExpiryOption = {
+  monthName: string;
+  monthValue: number;
+  year: number;
+};
+
 export const getExpiryOptions = () => {
   const date = new Date();
   let currentMonth = date.getMonth();
   let currentYear = date.getFullYear();
 
-  const options = [] as {
-    monthName: string;
-    monthValue: number;
-    year: number;
-  }[];
+  const options = [] as ExpiryOption[];
 
   for (let i = 0; i < EXPIRY_OPTION_LENGTH; i++) {
     options.push({

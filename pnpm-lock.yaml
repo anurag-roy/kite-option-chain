@@ -14,7 +14,7 @@ specifiers:
   kiteconnect-ts: ^0.4.2
   lodash.startcase: ^4.4.0
   next: 13.1.6
-  next-plugin-websocket: ^0.1.1
+  next-plugin-websocket: ^0.1.2
   postcss: ^8.4.21
   prisma: ^4.10.1
   react: 18.2.0
@@ -32,7 +32,7 @@ dependencies:
   kiteconnect-ts: 0.4.2
   lodash.startcase: 4.4.0
   next: 13.1.6_biqbaboplfbrettd7655fr4n2y
-  next-plugin-websocket: 0.1.1_next@13.1.6
+  next-plugin-websocket: 0.1.2
   react: 18.2.0
   react-dom: 18.2.0_react@18.2.0
 
@@ -1136,18 +1136,15 @@ packages:
     resolution: {integrity: sha512-ONmRUqK7zj7DWX0D9ADe03wbwOBZxNAfF20PlGfCWQcD3+/MakShIHrMqx9YwPTfxDdF1zLeL+RGZiR9kGMLdg==}
     dev: false
 
-  /next-plugin-websocket/0.1.1_next@13.1.6:
-    resolution: {integrity: sha512-UMsZLTnreJDOX4aa5KQt15r1r7pm0+ogOyvHUy8QHNSEqvLCzFtYToMSzMp/xCyLpCffbldD4ww5bfgEgL42Mw==}
+  /next-plugin-websocket/0.1.2:
+    resolution: {integrity: sha512-aPzrkP+8dSB0tnwMs9zDtA177cRR0cUwnKv81B43mQK+htVuPEWNGogKUxPpUZ9CQ7OL7Fq0givVI0s3pl2Ycg==}
     requiresBuild: true
-    peerDependencies:
-      next: ^13
     dependencies:
       '@babel/generator': 7.20.14
       '@babel/parser': 7.20.15
       '@babel/template': 7.20.7
       '@babel/types': 7.20.7
       '@types/ws': 8.5.4
-      next: 13.1.6_biqbaboplfbrettd7655fr4n2y
       ws: 8.12.0
     transitivePeerDependencies:
       - bufferutil
