@@ -15,6 +15,10 @@ export const socket: NextWebSocketHandler = async (client, req) => {
       client.on('close', () => {
         console.log('Client disconnected');
         clients.delete(name);
+        const tokensToUnsubscribe = Object.entries(Object.fromEntries(tokenMap))
+          .filter(([_k, v]) => v === name)
+          .map(([k, v]) => Number(k));
+        kt.unsubscribe(tokensToUnsubscribe);
       });
 
       const { equityStock, optionsStocks } = await getInstrumentsToSubscribe(
