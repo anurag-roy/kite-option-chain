@@ -1,18 +1,16 @@
-import { expiryOptions, groups } from '@/config';
-import { ExpiryOption, getKeys } from '@/utils';
+import { groups } from '@/config';
+import { getExpiryOptions, getKeys } from '@/utils';
 import { FormEvent, useState } from 'react';
 import { ComboBoxInput } from './ComboBoxInput';
 import { Table } from './Table';
 
 const groupDropdownOptions = getKeys(groups);
-const expiryDropdownOptions = expiryOptions.map(
-  (o) => `${o.monthName} ${o.year}`
-);
+const expiryOptions = getExpiryOptions();
 
 export function Main() {
   const [isSubscribed, setIsSubscribed] = useState(false);
   const [subscribedStocks, setSubscribedStocks] = useState<string[]>([]);
-  const [expiry, setExpiry] = useState<ExpiryOption>();
+  const [expiry, setExpiry] = useState<string>('');
 
   const handleFormSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -27,12 +25,7 @@ export function Main() {
       const selectedExpiry = formData.get('expiry')?.valueOf() as string;
 
       setSubscribedStocks(groups[selectedGroup]);
-      setExpiry(
-        expiryOptions.find((o) => {
-          const [month, year] = selectedExpiry.split(' ');
-          return o.monthName === month && o.year.toString() === year;
-        })
-      );
+      setExpiry(selectedExpiry);
       setIsSubscribed(true);
     }
   };
@@ -44,7 +37,7 @@ export function Main() {
         onSubmit={handleFormSubmit}
       >
         <ComboBoxInput name="group" items={groupDropdownOptions} />
-        <ComboBoxInput name="expiry" items={expiryDropdownOptions} />
+        <ComboBoxInput name="expiry" items={expiryOptions} />
         <button
           type="submit"
           className="px-4 py-2 text-base font-medium rounded-full text-white animated-button focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
@@ -54,11 +47,7 @@ export function Main() {
       </form>
       <div className="grid grid-cols-3 gap-4">
         {subscribedStocks.map((s) => (
-          <Table
-            key={s}
-            name={s}
-            expiry={`${expiry?.year}-${expiry?.monthValue! + 1}`}
-          />
+          <Table key={s} name={s} expiry={expiry} />
         ))}
       </div>
     </main>

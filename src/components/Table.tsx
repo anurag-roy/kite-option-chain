@@ -10,20 +10,22 @@ export function Table({ name, expiry }: TableProps) {
   const [instruments, setInstruments] = useState<any>([]);
 
   useEffect(() => {
-    console.log('Connecting websocket');
-    const ws = new WebSocket(
-      `ws://localhost:8000/api/wss?name=${name}&expiry=${expiry}`
-    );
+    if (name && expiry) {
+      console.log('Connecting websocket');
+      const ws = new WebSocket(
+        `ws://localhost:8000/api/wss?name=${name}&expiry=${expiry}`
+      );
 
-    ws.onopen = () => {
-      console.log('Connected!');
-    };
+      ws.onopen = () => {
+        console.log('Connected!');
+      };
 
-    ws.onmessage = (event) => {
-      console.log('From server', event.data);
-    };
-    //clean up function
-    return () => ws.close();
+      ws.onmessage = (event) => {
+        console.log('From server', event.data);
+      };
+      //clean up function
+      return () => ws.close();
+    }
   }, []);
 
   return (

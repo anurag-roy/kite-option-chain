@@ -1,5 +1,3 @@
-import { getExpiryOptions } from '@/utils';
-
 export const groups = {
   'Basic Commodities': [
     'OFSS',
@@ -41,5 +39,3 @@ export const groups = {
 
 // Number of months to show in the expiry dropdown
 export const EXPIRY_OPTION_LENGTH = 3;
-
-export const expiryOptions = getExpiryOptions();
