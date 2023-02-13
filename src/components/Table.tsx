@@ -24,7 +24,6 @@ export const Table = memo(({ name, expiry }: TableProps) => {
       ws.onmessage = (event) => {
         const { action, data } = JSON.parse(event.data) as SocketData;
         if (action === 'init') {
-          console.log('Data', data);
           setLtp(data.ltp);
           setInstruments(data.options);
         } else if (action === 'option-update') {
@@ -51,46 +50,50 @@ export const Table = memo(({ name, expiry }: TableProps) => {
   }, []);
 
   return (
-    <div className="max-h-[60vh] overflow-y-auto shadow ring-1 ring-black ring-opacity-5 rounded-lg">
-      <table className="min-w-full h-fit divide-y divide-gray-300">
-        <thead className="bg-gray-50 sticky top-0">
-          <tr className="divide-x divide-gray-200">
-            <th scope="col">
-              {name} <span className="text-xl font-bold">({ltp})</span>
-            </th>
-            <th scope="col">Bid</th>
-            <th scope="col">Ask</th>
-          </tr>
-        </thead>
-        <tbody className="divide-y divide-gray-200 bg-white overflow-y-auto">
-          {instruments?.length === 0 ? (
-            <tr>
-              <td colSpan={3}>No data to display.</td>
+    <div>
+      <div className="p-2 flex items-baseline gap-4">
+        <h3 className="text-xl font-bold text-gray-900">{name}</h3>
+        <p className="text-sm font-semibold">{ltp}</p>
+      </div>
+      <div className="max-h-[60vh] overflow-y-auto shadow ring-1 ring-black ring-opacity-5 rounded-lg">
+        <table className="min-w-full h-fit divide-y divide-gray-300">
+          <thead className="bg-gray-50 sticky top-0">
+            <tr className="divide-x divide-gray-200">
+              <th scope="col">Strike</th>
+              <th scope="col">Bid</th>
+              <th scope="col">Ask</th>
             </tr>
-          ) : (
-            instruments
-              ?.filter((i) => {
-                if (!ltp) return true;
-                return (
-                  (i.strike <= 0.9 * ltp && i.instrument_type === 'PE') ||
-                  (i.strike >= 1.1 * ltp && i.instrument_type === 'CE')
-                );
-              })
-              .map((i) => (
-                <tr
-                  key={i.instrument_token}
-                  className="divide-x divide-gray-200"
-                >
-                  <td className="-px-4 font-normal text-gray-500">
-                    {i.strike} {i.instrument_type}
-                  </td>
-                  <td>{i.bid ?? '-'}</td>
-                  <td>{i.ask ?? '-'}</td>
-                </tr>
-              ))
-          )}
-        </tbody>
-      </table>
+          </thead>
+          <tbody className="divide-y divide-gray-200 bg-white overflow-y-auto">
+            {instruments?.length === 0 ? (
+              <tr>
+                <td colSpan={3}>No data to display.</td>
+              </tr>
+            ) : (
+              instruments
+                ?.filter((i) => {
+                  if (!ltp) return true;
+                  return (
+                    (i.strike <= 0.9 * ltp && i.instrument_type === 'PE') ||
+                    (i.strike >= 1.1 * ltp && i.instrument_type === 'CE')
+                  );
+                })
+                .map((i) => (
+                  <tr
+                    key={i.instrument_token}
+                    className="divide-x divide-gray-200"
+                  >
+                    <td className="-px-4 font-normal text-gray-500">
+                      {i.strike} {i.instrument_type}
+                    </td>
+                    <td>{i.bid ?? '-'}</td>
+                    <td>{i.ask ?? '-'}</td>
+                  </tr>
+                ))
+            )}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 });
