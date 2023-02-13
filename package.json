@@ -13,7 +13,7 @@
     "@heroicons/react": "^2.0.15",
     "@prisma/client": "^4.10.1",
     "better-sqlite3": "^8.1.0",
-    "kiteconnect-ts": "^0.4.2",
+    "kiteconnect-ts": "^0.4.3",
     "lodash.startcase": "^4.4.0",
     "next": "13.1.6",
     "next-plugin-websocket": "^0.1.2",

@@ -1,4 +1,4 @@
-import { clients, kt, tokenMap } from '@/globals';
+import { clients, kc, kt, tokenMap } from '@/globals';
 import { getInstrumentsToSubscribe } from '@/utils';
 import { NextApiHandler } from 'next';
 import { NextWebSocketHandler } from 'next-plugin-websocket';
@@ -22,15 +22,25 @@ export const socket: NextWebSocketHandler = async (client, req) => {
         expiry
       );
 
-      tokenMap.set(Number(equityStock.instrument_token), name);
-      optionsStocks.forEach((o) =>
-        tokenMap.set(Number(o.instrument_token), name)
+      tokenMap.set(equityStock.instrument_token, name);
+      optionsStocks.forEach((o) => tokenMap.set(o.instrument_token, name));
+
+      const ltp = await kc.getLTP([equityStock.id]);
+
+      client.send(
+        JSON.stringify({
+          action: 'init',
+          data: {
+            ltp: ltp[equityStock.id].last_price,
+            options: optionsStocks.map((s) => ({ ...s, bid: 0, ask: 0 })),
+          },
+        })
       );
 
-      kt.setMode('ltp', [Number(equityStock.instrument_token)]);
+      kt.setMode('ltp', [equityStock.instrument_token]);
       kt.setMode(
         'full',
-        optionsStocks.map((o) => Number(o.instrument_token))
+        optionsStocks.map((o) => o.instrument_token)
       );
     }
   }

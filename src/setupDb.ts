@@ -5,8 +5,10 @@ import { kc } from './globals';
 
 const allowedStocks = Object.values(groups).flatMap((s) => s);
 
-const getSqliteType = (value: any) =>
-  typeof value === 'number' ? 'REAL' : 'TEXT';
+const getSqliteType = (key: string, value: any) => {
+  if (key === 'instrument_token') return 'INTEGER';
+  else return typeof value === 'number' ? 'REAL' : 'TEXT';
+};
 
 async function main() {
   const nseInstruments = await kc.getInstruments(['NSE']);
@@ -31,7 +33,9 @@ async function main() {
   db.prepare(
     `CREATE TABLE ${TABLE_NAME} (` +
       'id TEXT NOT NULL PRIMARY KEY,' +
-      columns.map((c) => `${c} ${getSqliteType(c)} NOT NULL`).join(',') +
+      columns
+        .map((c) => `${c} ${getSqliteType(c, instruments[0][c])} NOT NULL`)
+        .join(',') +
       ');'
   ).run();
   console.log('Table creation successful!');

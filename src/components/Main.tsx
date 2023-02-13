@@ -46,7 +46,7 @@ export function Main() {
           {isSubscribed ? 'Unsubscribe' : 'Subscribe'}
         </button>
       </form>
-      <div className="grid grid-cols-3 gap-4">
+      <div className="p-12 grid grid-cols-3 gap-12">
         {subscribedStocks.map((s) => (
           <Table key={s} name={s} expiry={expiry} />
         ))}

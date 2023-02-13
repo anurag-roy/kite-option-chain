@@ -1,3 +1,4 @@
+import { SocketData, UiInstrument } from '@/types/SocketData';
 import { memo, useEffect, useState } from 'react';
 
 type TableProps = {
@@ -6,8 +7,8 @@ type TableProps = {
 };
 
 export const Table = memo(({ name, expiry }: TableProps) => {
-  // TODO: Add type here
-  const [instruments, setInstruments] = useState<any>([]);
+  const [ltp, setLtp] = useState(0);
+  const [instruments, setInstruments] = useState<UiInstrument[]>([]);
 
   useEffect(() => {
     if (name && expiry) {
@@ -21,7 +22,28 @@ export const Table = memo(({ name, expiry }: TableProps) => {
       };
 
       ws.onmessage = (event) => {
-        console.log('From server', event.data);
+        const { action, data } = JSON.parse(event.data) as SocketData;
+        if (action === 'init') {
+          console.log('Data', data);
+          setLtp(data.ltp);
+          setInstruments(data.options);
+        } else if (action === 'option-update') {
+          setInstruments((instruments) =>
+            instruments.map((i) => {
+              if (i.instrument_token === data.token) {
+                return {
+                  ...i,
+                  bid: data.bid,
+                  ask: data.ask,
+                };
+              } else {
+                return i;
+              }
+            })
+          );
+        } else if (action === 'ltp-update') {
+          setLtp(data.ltp);
+        }
       };
       //clean up function
       return () => ws.close();
@@ -29,11 +51,13 @@ export const Table = memo(({ name, expiry }: TableProps) => {
   }, []);
 
   return (
-    <div className="mx-8 mt-8 mb-4 overflow-y-auto shadow ring-1 ring-black ring-opacity-5 rounded-lg grow">
-      <table className="min-w-full h-full divide-y divide-gray-300">
+    <div className="max-h-[60vh] overflow-y-auto shadow ring-1 ring-black ring-opacity-5 rounded-lg">
+      <table className="min-w-full h-fit divide-y divide-gray-300">
         <thead className="bg-gray-50 sticky top-0">
           <tr className="divide-x divide-gray-200">
-            <th scope="col">{name}</th>
+            <th scope="col">
+              {name} <span className="text-xl font-bold">({ltp})</span>
+            </th>
             <th scope="col">Bid</th>
             <th scope="col">Ask</th>
           </tr>
@@ -44,13 +68,26 @@ export const Table = memo(({ name, expiry }: TableProps) => {
               <td colSpan={3}>No data to display.</td>
             </tr>
           ) : (
-            instruments?.map((i: any) => (
-              <tr key={i.token} className="divide-x divide-gray-200">
-                <td className="-px-4 font-normal text-gray-500">{i.name}</td>
-                <td>{i.bid ?? '-'}</td>
-                <td>{i.ask ?? '-'}</td>
-              </tr>
-            ))
+            instruments
+              ?.filter((i) => {
+                if (!ltp) return true;
+                return (
+                  (i.strike <= 0.9 * ltp && i.instrument_type === 'PE') ||
+                  (i.strike >= 1.1 * ltp && i.instrument_type === 'CE')
+                );
+              })
+              .map((i) => (
+                <tr
+                  key={i.instrument_token}
+                  className="divide-x divide-gray-200"
+                >
+                  <td className="-px-4 font-normal text-gray-500">
+                    {i.strike} {i.instrument_type}
+                  </td>
+                  <td>{i.bid ?? '-'}</td>
+                  <td>{i.ask ?? '-'}</td>
+                </tr>
+              ))
           )}
         </tbody>
       </table>

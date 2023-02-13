@@ -9,15 +9,15 @@ datasource db {
 
 model instrument {
   id               String @id
-  instrument_token String
+  instrument_token Int
   exchange_token   String
   tradingsymbol    String
   name             String
-  last_price       String
+  last_price       Float
   expiry           String
-  strike           String
-  tick_size        String
-  lot_size         String
+  strike           Float
+  tick_size        Float
+  lot_size         Float
   instrument_type  String
   segment          String
   exchange         String
