@@ -1,5 +1,5 @@
 import env from '@/env.json';
-import { kc } from '@/globals/kc';
+import { kc } from '@/globals';
 import { writeFileSync } from 'fs';
 import { GetServerSidePropsContext } from 'next';
 

@@ -1,10 +1,14 @@
 import { Header } from '@/components/Header';
 import { Main } from '@/components/Main';
-import { kc } from '@/globals/kc';
+import { kc, kt } from '@/globals';
 import { GetServerSidePropsContext } from 'next';
 import Head from 'next/head';
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
+  // Connect KiteTicker
+  kt.connect();
+
+  // getProfile call to check if logged in or not
   try {
     const profile = await kc.getProfile();
     return {

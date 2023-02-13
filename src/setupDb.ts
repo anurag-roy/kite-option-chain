@@ -1,12 +1,23 @@
 import { getKeys } from '@/utils';
 import Database from 'better-sqlite3';
-import { kc } from './globals/kc';
+import { groups } from './config';
+import { kc } from './globals';
+
+const allowedStocks = Object.values(groups).flatMap((s) => s);
 
 const getSqliteType = (value: any) =>
   typeof value === 'number' ? 'REAL' : 'TEXT';
 
 async function main() {
-  const instruments = await kc.getInstruments();
+  const nseInstruments = await kc.getInstruments(['NSE']);
+  const nfoInstruments = await kc.getInstruments(['NFO']);
+
+  const instruments = [
+    ...nseInstruments.filter((i) => allowedStocks.includes(i.tradingsymbol)),
+    ...nfoInstruments.filter(
+      (i) => allowedStocks.includes(i.name) && i.segment === 'NFO-OPT'
+    ),
+  ];
 
   const columns = getKeys(instruments[0]);
 
@@ -48,8 +59,10 @@ async function main() {
     );
 
     for (const col of columns) {
-      const value = instrument[col];
-      currentRowValues.push(typeof value === 'string' ? `'${value}'` : value);
+      let value = instrument[col];
+      value = typeof value === 'object' ? value.toISOString() : value;
+      value = typeof value === 'string' ? `'${value}'` : value;
+      currentRowValues.push(value);
     }
     currentBatchValues.push(`(${currentRowValues.join(',')})`);
 
@@ -65,8 +78,6 @@ async function main() {
   console.log('Data insertion successful!');
 }
 
-try {
-  main();
-} catch (error) {
+main().catch((error) => {
   console.log('Data preparation failed', error);
-}
+});

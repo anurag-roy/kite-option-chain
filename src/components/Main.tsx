@@ -12,11 +12,12 @@ export function Main() {
   const [subscribedStocks, setSubscribedStocks] = useState<string[]>([]);
   const [expiry, setExpiry] = useState<string>('');
 
-  const handleFormSubmit = async (event: FormEvent<HTMLFormElement>) => {
+  const handleFormSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     if (isSubscribed) {
       setSubscribedStocks([]);
+      setIsSubscribed(false);
     } else {
       const formData = new FormData(event.currentTarget);
       const selectedGroup = formData
@@ -24,9 +25,9 @@ export function Main() {
         ?.valueOf() as keyof typeof groups;
       const selectedExpiry = formData.get('expiry')?.valueOf() as string;
 
-      setSubscribedStocks(groups[selectedGroup]);
-      setExpiry(selectedExpiry);
       setIsSubscribed(true);
+      setExpiry(selectedExpiry);
+      setSubscribedStocks(groups[selectedGroup]);
     }
   };
 

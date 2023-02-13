@@ -1,11 +1,11 @@
-import { useEffect, useState } from 'react';
+import { memo, useEffect, useState } from 'react';
 
 type TableProps = {
   name: string;
   expiry: string;
 };
 
-export function Table({ name, expiry }: TableProps) {
+export const Table = memo(({ name, expiry }: TableProps) => {
   // TODO: Add type here
   const [instruments, setInstruments] = useState<any>([]);
 
@@ -56,4 +56,4 @@ export function Table({ name, expiry }: TableProps) {
       </table>
     </div>
   );
-}
+});

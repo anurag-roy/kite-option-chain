@@ -4,7 +4,7 @@ export const groups = {
     'DELTACORP',
     'BRITANNIA',
     'BATAINDIA',
-    'WHR',
+    'WHIRLPOOL',
     'VOLTAS',
   ],
   'Heavy Industries (Private)': [
@@ -12,7 +12,7 @@ export const groups = {
     'RAIN',
     'PETRONET',
     'DIXON',
-    'ASIAPAINT',
+    'ASIANPAINT',
   ],
   'Heavy Industries (Public) - 1': [
     'BHEL',
@@ -22,14 +22,7 @@ export const groups = {
     'HINDCOPPER',
     'IEX',
   ],
-  'Heavy Industries (Public) - 2': [
-    'IOC',
-    'NATIONALUM',
-    'NMDC',
-    'OIL',
-    'PFC',
-    'SAIL',
-  ],
+  'Heavy Industries (Public) - 2': ['IOC', 'NATIONALUM', 'NMDC', 'PFC', 'SAIL'],
   'Adani & Tata': ['AMBUJACEM', 'ACC', 'TATAMOTORS', 'TATASTEEL', 'ADANIENT'],
   'Automotives & Spares': ['APOLLOTYRE', 'EICHERMOT', 'MOTHERSON', 'MRF'],
   'Hospital Labs': ['AUROPHARMA', 'DIVISLAB', 'DRREDDY', 'IPCALAB'],
