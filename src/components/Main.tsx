@@ -1,7 +1,9 @@
 import { groups } from '@/config';
 import { getExpiryOptions, getKeys } from '@/utils';
+import { QuestionMarkCircleIcon } from '@heroicons/react/24/solid';
 import { FormEvent, useState } from 'react';
 import { ComboBoxInput } from './ComboBoxInput';
+import { GroupDetails } from './GroupDetails';
 import { Table } from './Table';
 
 const groupDropdownOptions = getKeys(groups);
@@ -11,6 +13,8 @@ export function Main() {
   const [isSubscribed, setIsSubscribed] = useState(false);
   const [subscribedStocks, setSubscribedStocks] = useState<string[]>([]);
   const [expiry, setExpiry] = useState<string>('');
+
+  const [isGroupDetailsOpen, setIsGroupDetailsOpen] = useState(false);
 
   const handleFormSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -34,14 +38,22 @@ export function Main() {
   return (
     <main>
       <form
-        className="max-w-5xl mx-auto mt-6 rounded-lg py-6 bg-gray-100 flex items-end justify-between px-4 sm:px-6 lg:px-8 [&>*:first-child]:grow"
+        className="max-w-5xl mx-auto mt-6 rounded-lg py-6 bg-gray-100 flex items-end px-4 sm:px-6 lg:px-8 [&>*:first-child]:grow"
         onSubmit={handleFormSubmit}
       >
         <ComboBoxInput name="group" items={groupDropdownOptions} />
+        <button
+          type="button"
+          onClick={() => setIsGroupDetailsOpen(!isGroupDetailsOpen)}
+          className="p-1 rounded-md mr-auto mb-1 ml-1"
+          title="Group Details"
+        >
+          <QuestionMarkCircleIcon className="h-6 w-6 text-gray-400 hover:text-gray-600" />
+        </button>
         <ComboBoxInput name="expiry" items={expiryOptions} />
         <button
           type="submit"
-          className="px-4 py-2 text-base font-medium rounded-full text-white animated-button focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
+          className="ml-auto px-4 py-2 text-base font-medium rounded-full text-white animated-button focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
         >
           {isSubscribed ? 'Unsubscribe' : 'Subscribe'}
         </button>
@@ -51,6 +63,7 @@ export function Main() {
           <Table key={s} name={s} expiry={expiry} />
         ))}
       </div>
+      <GroupDetails open={isGroupDetailsOpen} setOpen={setIsGroupDetailsOpen} />
     </main>
   );
 }
