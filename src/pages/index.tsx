@@ -38,7 +38,7 @@ export default function Home({ status, data }: HomeProps) {
   return (
     <>
       <Head>
-        <title>Kite Option Chain</title>
+        <title>Option Chain (Equity Derivatives)</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>

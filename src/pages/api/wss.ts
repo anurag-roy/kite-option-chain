@@ -29,13 +29,14 @@ export const socket: NextWebSocketHandler = async (client, req) => {
       tokenMap.set(equityStock.instrument_token, name);
       optionsStocks.forEach((o) => tokenMap.set(o.instrument_token, name));
 
-      const ltp = await kc.getLTP([equityStock.id]);
+      const ohlcResponse = await kc.getOHLC([equityStock.id]);
 
       client.send(
         JSON.stringify({
           action: 'init',
           data: {
-            ltp: ltp[equityStock.id].last_price,
+            ltp: ohlcResponse[equityStock.id].last_price,
+            previousClose: ohlcResponse[equityStock.id].ohlc.close,
             options: optionsStocks.map((s) => ({ ...s, bid: 0, ask: 0 })),
           },
         })

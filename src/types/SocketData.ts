@@ -10,6 +10,7 @@ export type SocketData =
       action: 'init';
       data: {
         ltp: number;
+        previousClose: number;
         options: UiInstrument[];
       };
     }

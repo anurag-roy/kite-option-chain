@@ -10,7 +10,10 @@ type TableProps = {
 
 export const Table = memo(({ name, expiry }: TableProps) => {
   const [ltp, setLtp] = useState(0);
+  const [previousClose, setPreviousClose] = useState(0);
   const [instruments, setInstruments] = useState<UiInstrument[]>([]);
+
+  const diff = ltp - previousClose;
 
   useEffect(() => {
     if (name && expiry) {
@@ -27,6 +30,7 @@ export const Table = memo(({ name, expiry }: TableProps) => {
         const { action, data } = JSON.parse(event.data) as SocketData;
         if (action === 'init') {
           setLtp(data.ltp);
+          setPreviousClose(data.previousClose);
           setInstruments(data.options);
         } else if (action === 'option-update') {
           setInstruments((instruments) =>
@@ -54,8 +58,18 @@ export const Table = memo(({ name, expiry }: TableProps) => {
   return (
     <div>
       <div className="p-2 flex items-baseline gap-4">
-        <h3 className="text-xl font-bold text-gray-900">{name}</h3>
-        <p className="text-sm font-semibold">{ltp}</p>
+        <h3 className="text-xl font-bold">{name}</h3>
+        <span className="font-semibold">{ltp}</span>
+        <span
+          className={classNames(
+            'text-sm font-semibold',
+            diff < 0 ? 'text-red-600' : 'text-green-600'
+          )}
+        >
+          {diff < 0 ? '↓ ' : '↑ '}
+          {Math.abs(diff).toFixed(2)}
+        </span>
+        <p className="text-sm font-semibold"></p>
       </div>
       <div className="max-h-[60vh] overflow-y-auto shadow ring-1 ring-black ring-opacity-5 rounded-lg">
         <table className="min-w-full h-fit divide-y divide-gray-300">
@@ -89,16 +103,16 @@ export const Table = memo(({ name, expiry }: TableProps) => {
                   >
                     <td
                       className={classNames(
-                        '-px-4',
-                        'font-medium',
-                        'text-gray-900',
-                        i.instrument_type === 'CE' ? 'bg-yellow-100' : ''
+                        '-px-4 font-medium text-gray-900',
+                        i.instrument_type === 'CE'
+                          ? 'bg-yellow-50 text-yellow-800'
+                          : ''
                       )}
                     >
                       {i.strike} {i.instrument_type}
                     </td>
-                    <td className="bg-blue-50">{i.bid ?? '-'}</td>
-                    <td className="bg-red-50">{i.ask ?? '-'}</td>
+                    <td className="bg-blue-50 text-blue-800">{i.bid ?? '-'}</td>
+                    <td className="bg-red-50 text-red-800">{i.ask ?? '-'}</td>
                   </tr>
                 ))
             )}
