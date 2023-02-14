@@ -46,7 +46,7 @@ export function Main() {
           {isSubscribed ? 'Unsubscribe' : 'Subscribe'}
         </button>
       </form>
-      <div className="p-12 grid grid-cols-3 gap-12">
+      <div className="p-12 grid grid-cols-[repeat(_auto-fit,_minmax(360px,_1fr))] gap-12">
         {subscribedStocks.map((s) => (
           <Table key={s} name={s} expiry={expiry} />
         ))}
