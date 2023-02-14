@@ -37,6 +37,7 @@ export const getInstrumentsToSubscribe = async (
   stockName: string,
   expiryPrefix: string
 ) => {
+  // TODO: Expose Prisma as global
   const prisma = new PrismaClient();
 
   const equityStock = await prisma.instrument.findFirstOrThrow({

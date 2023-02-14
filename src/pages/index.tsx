@@ -6,7 +6,7 @@ import Head from 'next/head';
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   // Connect KiteTicker
-  kt.connect();
+  kt?.connect();
 
   // getProfile call to check if logged in or not
   try {

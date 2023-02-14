@@ -22,6 +22,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
       env.API_SECRET
     );
     writeFileSync('src/data/accessToken.txt', access_token, 'utf-8');
+    // TODO: Setup kt here with new access_token
     return {
       props: {
         status: 'success' as const,
