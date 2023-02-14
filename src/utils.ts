@@ -58,6 +58,9 @@ export const getInstrumentsToSubscribe = async (
         startsWith: expiryPrefix,
       },
     },
+    orderBy: {
+      strike: 'asc',
+    },
   });
 
   return {

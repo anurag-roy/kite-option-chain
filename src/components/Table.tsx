@@ -1,4 +1,6 @@
+import { DIFF_PERCENT } from '@/config';
 import { SocketData, UiInstrument } from '@/types/SocketData';
+import { classNames } from '@/utils';
 import { memo, useEffect, useState } from 'react';
 
 type TableProps = {
@@ -74,8 +76,10 @@ export const Table = memo(({ name, expiry }: TableProps) => {
                 ?.filter((i) => {
                   if (!ltp) return true;
                   return (
-                    (i.strike <= 0.9 * ltp && i.instrument_type === 'PE') ||
-                    (i.strike >= 1.1 * ltp && i.instrument_type === 'CE')
+                    (i.strike <= ((100 - DIFF_PERCENT) * ltp) / 100 &&
+                      i.instrument_type === 'PE') ||
+                    (i.strike >= ((100 + DIFF_PERCENT) * ltp) / 100 &&
+                      i.instrument_type === 'CE')
                   );
                 })
                 .map((i) => (
@@ -83,11 +87,18 @@ export const Table = memo(({ name, expiry }: TableProps) => {
                     key={i.instrument_token}
                     className="divide-x divide-gray-200"
                   >
-                    <td className="-px-4 font-normal text-gray-500">
+                    <td
+                      className={classNames(
+                        '-px-4',
+                        'font-medium',
+                        'text-gray-900',
+                        i.instrument_type === 'CE' ? 'bg-yellow-100' : ''
+                      )}
+                    >
                       {i.strike} {i.instrument_type}
                     </td>
-                    <td>{i.bid ?? '-'}</td>
-                    <td>{i.ask ?? '-'}</td>
+                    <td className="bg-blue-50">{i.bid ?? '-'}</td>
+                    <td className="bg-red-50">{i.ask ?? '-'}</td>
                   </tr>
                 ))
             )}
