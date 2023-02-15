@@ -13,6 +13,16 @@ export const Table = memo(({ name, expiry }: TableProps) => {
   const [previousClose, setPreviousClose] = useState(0);
   const [instruments, setInstruments] = useState<UiInstrument[]>([]);
 
+  const filteredInstruments = instruments?.filter((i) => {
+    if (!ltp) return true;
+    return (
+      (i.strike <= ((100 - DIFF_PERCENT) * ltp) / 100 &&
+        i.instrument_type === 'PE') ||
+      (i.strike >= ((100 + DIFF_PERCENT) * ltp) / 100 &&
+        i.instrument_type === 'CE')
+    );
+  });
+
   const diff = ltp - previousClose;
 
   useEffect(() => {
@@ -74,8 +84,8 @@ export const Table = memo(({ name, expiry }: TableProps) => {
         </span>
         <p className="text-sm font-semibold"></p>
       </div>
-      <div className="max-h-[60vh] overflow-y-auto shadow ring-1 ring-black ring-opacity-5 rounded-lg">
-        <table className="min-w-full h-fit divide-y divide-gray-300">
+      <div className="resize bg-white overflow-y-auto shadow ring-1 ring-black ring-opacity-5 rounded-lg">
+        <table className="min-w-full h-fit max-h-[50vh] divide-y divide-gray-300">
           <thead className="bg-gray-50 sticky top-0">
             <tr className="divide-x divide-gray-200">
               <th scope="col">Strike</th>
@@ -84,40 +94,30 @@ export const Table = memo(({ name, expiry }: TableProps) => {
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-200 bg-white overflow-y-auto">
-            {instruments?.length === 0 ? (
+            {filteredInstruments?.length === 0 ? (
               <tr>
                 <td colSpan={3}>No data to display.</td>
               </tr>
             ) : (
-              instruments
-                ?.filter((i) => {
-                  if (!ltp) return true;
-                  return (
-                    (i.strike <= ((100 - DIFF_PERCENT) * ltp) / 100 &&
-                      i.instrument_type === 'PE') ||
-                    (i.strike >= ((100 + DIFF_PERCENT) * ltp) / 100 &&
-                      i.instrument_type === 'CE')
-                  );
-                })
-                .map((i) => (
-                  <tr
-                    key={i.instrument_token}
-                    className="divide-x divide-gray-200"
+              filteredInstruments.map((i) => (
+                <tr
+                  key={i.instrument_token}
+                  className="divide-x divide-gray-200"
+                >
+                  <td
+                    className={classNames(
+                      '-px-4 font-medium text-gray-900',
+                      i.instrument_type === 'CE'
+                        ? 'bg-yellow-50 text-yellow-800'
+                        : ''
+                    )}
                   >
-                    <td
-                      className={classNames(
-                        '-px-4 font-medium text-gray-900',
-                        i.instrument_type === 'CE'
-                          ? 'bg-yellow-50 text-yellow-800'
-                          : ''
-                      )}
-                    >
-                      {i.strike} {i.instrument_type}
-                    </td>
-                    <td className="bg-blue-50 text-blue-800">{i.bid ?? '-'}</td>
-                    <td className="bg-red-50 text-red-800">{i.ask ?? '-'}</td>
-                  </tr>
-                ))
+                    {i.strike} {i.instrument_type}
+                  </td>
+                  <td className="bg-blue-50 text-blue-800">{i.bid ?? '-'}</td>
+                  <td className="bg-red-50 text-red-800">{i.ask ?? '-'}</td>
+                </tr>
+              ))
             )}
           </tbody>
         </table>
