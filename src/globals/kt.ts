@@ -13,6 +13,7 @@ if (!kiteTicker.value) {
       api_key: env.API_KEY,
       access_token: accessToken,
     });
+
     kiteTicker.value.on('connect', () => {
       console.log('KiteTicker connected and ready to subscribe!');
     });

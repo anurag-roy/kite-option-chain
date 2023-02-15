@@ -1,6 +1,6 @@
 import { NseLogo } from '@/components/NseLogo';
 import env from '@/env.json';
-import { kc } from '@/globals';
+import { kc, kt } from '@/globals';
 import { GetServerSidePropsContext } from 'next';
 import { writeFileSync } from 'node:fs';
 
@@ -22,7 +22,11 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
       env.API_SECRET
     );
     writeFileSync('src/data/accessToken.txt', access_token, 'utf-8');
-    // TODO: Setup kt here with new access_token
+
+    //@ts-ignore Update private value of KiteTicker's access_token and then connect again
+    kt.access_token = access_token;
+    kt.connect();
+
     return {
       props: {
         status: 'success' as const,
