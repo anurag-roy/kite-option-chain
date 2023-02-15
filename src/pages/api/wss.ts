@@ -24,6 +24,7 @@ export const socket: NextWebSocketHandler = async (client, req) => {
         for (const [token, stockName] of tokenMap) {
           if (stockName === name) {
             tokensToUnsubscribe.push(token);
+            tokenMap.delete(token);
           }
         }
         kt.unsubscribe(tokensToUnsubscribe);
@@ -39,9 +40,9 @@ export const socket: NextWebSocketHandler = async (client, req) => {
       const response = await kc.getOHLC([equityStock.id]);
       const ohlcResponse = response[equityStock.id];
       const lowerBound =
-        ((100 - DIFF_PERCENT / 2) * ohlcResponse.last_price) / 100;
+        ((100 - 0.75 * DIFF_PERCENT) * ohlcResponse.last_price) / 100;
       const upperBound =
-        ((100 + DIFF_PERCENT / 2) * ohlcResponse.last_price) / 100;
+        ((100 + 0.75 * DIFF_PERCENT) * ohlcResponse.last_price) / 100;
 
       // Compute filtered stocks to send the scoket client
       const filteredOptionStocks: UiInstrument[] = [];
