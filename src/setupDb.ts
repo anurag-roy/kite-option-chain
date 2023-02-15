@@ -1,4 +1,4 @@
-import { getKeys } from '@/utils';
+import { getKeys } from '@/utils/ui';
 import Database from 'better-sqlite3';
 import { groups } from './config';
 import { kc } from './globals';

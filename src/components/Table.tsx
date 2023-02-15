@@ -1,6 +1,6 @@
 import { DIFF_PERCENT } from '@/config';
 import { SocketData, UiInstrument } from '@/types/SocketData';
-import { classNames } from '@/utils';
+import { classNames } from '@/utils/ui';
 import { memo, useEffect, useState } from 'react';
 
 type TableProps = {
@@ -18,8 +18,11 @@ export const Table = memo(({ name, expiry }: TableProps) => {
   useEffect(() => {
     if (name && expiry) {
       console.log('Connecting websocket');
+
       const ws = new WebSocket(
-        `ws://localhost:8000/api/wss?name=${name}&expiry=${expiry}`
+        `ws://localhost:8000/api/wss?name=${encodeURIComponent(
+          name
+        )}&expiry=${encodeURIComponent(expiry)}`
       );
 
       ws.onopen = () => {

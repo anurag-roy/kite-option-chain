@@ -1,5 +1,5 @@
 import { groups } from '@/config';
-import { getExpiryOptions, getKeys } from '@/utils';
+import { getExpiryOptions, getKeys } from '@/utils/ui';
 import { QuestionMarkCircleIcon } from '@heroicons/react/24/solid';
 import { FormEvent, useState } from 'react';
 import { ComboBoxInput } from './ComboBoxInput';

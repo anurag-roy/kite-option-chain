@@ -1,5 +1,4 @@
 import { EXPIRY_OPTION_LENGTH } from '@/config';
-import { PrismaClient } from '@prisma/client';
 
 export const getKeys = <T extends Object>(object: T) =>
   Object.keys(object) as Array<keyof T>;
@@ -31,41 +30,4 @@ export const getExpiryOptions = () => {
   }
 
   return options;
-};
-
-export const getInstrumentsToSubscribe = async (
-  stockName: string,
-  expiryPrefix: string
-) => {
-  // TODO: Expose Prisma as global
-  const prisma = new PrismaClient();
-
-  const equityStock = await prisma.instrument.findFirstOrThrow({
-    where: {
-      id: `NSE:${stockName}`,
-      tradingsymbol: stockName,
-      instrument_type: 'EQ',
-      exchange: 'NSE',
-    },
-  });
-  const optionsStocks = await prisma.instrument.findMany({
-    where: {
-      name: stockName,
-      exchange: 'NFO',
-      instrument_type: {
-        in: ['CE', 'PE'],
-      },
-      expiry: {
-        startsWith: expiryPrefix,
-      },
-    },
-    orderBy: {
-      strike: 'asc',
-    },
-  });
-
-  return {
-    equityStock,
-    optionsStocks,
-  };
 };

@@ -1,5 +1,5 @@
 import { clients, kc, kt, tokenMap } from '@/globals';
-import { getInstrumentsToSubscribe } from '@/utils';
+import { getInstrumentsToSubscribe } from '@/utils/db';
 import { NextApiHandler } from 'next';
 import { NextWebSocketHandler } from 'next-plugin-websocket';
 
@@ -13,7 +13,6 @@ export const socket: NextWebSocketHandler = async (client, req) => {
       clients.set(name, client);
 
       client.on('close', () => {
-        console.log('Client disconnected');
         clients.delete(name);
         const tokensToUnsubscribe = Object.entries(Object.fromEntries(tokenMap))
           .filter(([_k, v]) => v === name)

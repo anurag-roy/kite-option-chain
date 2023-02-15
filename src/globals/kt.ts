@@ -1,9 +1,8 @@
 import env from '@/env.json';
 import { KiteTicker, TickFull, TickLtp } from 'kiteconnect-ts';
 import { readFileSync } from 'node:fs';
-import { clients } from './clients';
 import { GlobalRef } from './GlobalRef';
-import { tokenMap } from './tokenToStockMap';
+import { clients, tokenMap } from './maps';
 
 const kiteTicker = new GlobalRef<KiteTicker>('myapp.kiteticker');
 if (!kiteTicker.value) {

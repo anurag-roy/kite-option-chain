@@ -1,4 +1,4 @@
-import { classNames } from '@/utils';
+import { classNames } from '@/utils/ui';
 import { Combobox } from '@headlessui/react';
 import { CheckIcon, ChevronDownIcon } from '@heroicons/react/24/solid';
 import startCase from 'lodash.startcase';
