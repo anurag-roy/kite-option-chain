@@ -98,6 +98,4 @@ There are definitely some optimisations that can be made, but were not made beca
 
 [MIT © 2023 Anurag Roy](/LICENSE)
 
----
-
 [^1]: The app uses this [Next.js plugin](https://www.npmjs.com/package/next-plugin-websocket) to maintain a WebSocket Server, which patches some files in `node_modules`. I have tried using `pnpm` but it does not work reliably. See other caveats [here](https://github.com/sam3d/next-plugin-websocket#caveats).
