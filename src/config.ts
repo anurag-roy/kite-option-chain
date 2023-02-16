@@ -55,4 +55,4 @@ export const groups = {
 // Number of months to show in the expiry dropdown
 export const EXPIRY_OPTION_LENGTH = 3;
 
-export const DIFF_PERCENT = 18;
+export const DIFF_PERCENT = 20;
