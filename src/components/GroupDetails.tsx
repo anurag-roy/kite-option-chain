@@ -51,7 +51,7 @@ export function GroupDetails({ open, setOpen }: GroupDetailsProps) {
               >
                 Group Details
               </Dialog.Title>
-              <div className="grid grid-cols-3 gap-8">
+              <div className="grid grid-cols-2 gap-8">
                 {Object.entries(groups).map(([key, values]) => (
                   <div
                     key={key}
@@ -60,7 +60,7 @@ export function GroupDetails({ open, setOpen }: GroupDetailsProps) {
                     <h4 className="text-lg font-bold text-gray-800 mb-6">
                       {key}
                     </h4>
-                    <ul className="flex flex-wrap gap-2">
+                    <ul className="flex flex-wrap gap-4">
                       {values.map((v) => (
                         <li
                           key={v}

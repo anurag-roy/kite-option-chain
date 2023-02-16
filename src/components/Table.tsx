@@ -89,8 +89,12 @@ export const Table = memo(({ name, expiry }: TableProps) => {
           <thead className="bg-gray-50 sticky top-0">
             <tr className="divide-x divide-gray-200">
               <th scope="col">Strike</th>
-              <th scope="col">Bid</th>
-              <th scope="col">Ask</th>
+              <th scope="col" className="min-w-[5ch]">
+                Bid
+              </th>
+              <th scope="col" className="min-w-[5ch]">
+                Ask
+              </th>
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-200 bg-white overflow-y-auto">

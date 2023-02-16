@@ -1,36 +1,58 @@
 export const groups = {
-  'Basic Commodities': [
-    'OFSS',
-    'DELTACORP',
-    'BRITANNIA',
-    'BATAINDIA',
-    'WHIRLPOOL',
-    'VOLTAS',
-  ],
-  'Heavy Industries (Private)': [
+  'Adani & Tata, Heavy Industries (Private)': [
+    'AMBUJACEM',
+    'ACC',
+    'TATAMOTORS',
+    'TATASTEEL',
+    'ADANIENT',
     'VEDL',
     'RAIN',
     'PETRONET',
     'DIXON',
     'ASIANPAINT',
   ],
-  'Heavy Industries (Public) - 1': [
+  'Heavy Industries (Public)': [
     'BHEL',
     'BEL',
     'COALINDIA',
     'GAIL',
     'HINDCOPPER',
     'IEX',
+    'IOC',
+    'NATIONALUM',
+    'NMDC',
+    'PFC',
+    'SAIL',
   ],
-  'Heavy Industries (Public) - 2': ['IOC', 'NATIONALUM', 'NMDC', 'PFC', 'SAIL'],
-  'Adani & Tata': ['AMBUJACEM', 'ACC', 'TATAMOTORS', 'TATASTEEL', 'ADANIENT'],
-  'Automotives & Spares': ['APOLLOTYRE', 'EICHERMOT', 'MOTHERSON', 'MRF'],
-  'Hospital Labs': ['AUROPHARMA', 'DIVISLAB', 'DRREDDY', 'IPCALAB'],
-  'Banking Finance (Private)': ['IBULHSGFIN', 'ICICIGI', 'L&TFH', 'MANAPPURAM'],
-  'Banking Finance (Public)': ['SBIN', 'CUB', 'FEDERALBNK', 'IDFCFIRSTB'],
+  'Banking & Finance, Automotive & Spares': [
+    'IBULHSGFIN',
+    'ICICIGI',
+    'L&TFH',
+    'MANAPPURAM',
+    'SBIN',
+    'CUB',
+    'FEDERALBNK',
+    'IDFCFIRSTB',
+    'APOLLOTYRE',
+    'EICHERMOT',
+    'MOTHERSON',
+    'MRF',
+  ],
+  'Basic Commodities, Hospital Labs': [
+    'OFSS',
+    'DELTACORP',
+    'BRITANNIA',
+    'BATAINDIA',
+    'WHIRLPOOL',
+    'VOLTAS',
+    'AUROPHARMA',
+    'DIVISLAB',
+    'DRREDDY',
+    'IPCALAB',
+  ],
 };
 
 // Number of months to show in the expiry dropdown
 export const EXPIRY_OPTION_LENGTH = 3;
 
-export const DIFF_PERCENT = 20;
+export const DIFF_PERCENT = 18;
