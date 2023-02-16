@@ -18,10 +18,22 @@ if (!kiteTicker.value) {
       console.log('KiteTicker connected and ready to subscribe!');
     });
 
+    kiteTicker.value.on('error', (err: any) => {
+      console.log('Error connecting to kiteTicker', err);
+    });
+
     kiteTicker.value.on('ticks', (ticks: (TickLtp | TickFull)[]) => {
       ticks.forEach((t) => {
-        const socketId = tokenMap.get(t.instrument_token)!;
+        const socketId = tokenMap.get(t.instrument_token);
+        if (!socketId) {
+          return;
+        }
+
         const socketClient = clients.get(socketId)!;
+        if (!socketClient) {
+          return;
+        }
+
         let message: any;
         if (t.mode === 'ltp') {
           message = {
@@ -40,7 +52,7 @@ if (!kiteTicker.value) {
             },
           };
         }
-        socketClient.send(JSON.stringify(message));
+        socketClient?.send(JSON.stringify(message));
       });
     });
   } catch (error) {

@@ -10,7 +10,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     const profile = await kc.getProfile();
 
     // Connect KiteTicker if API call is successful, i.e. token is valid
-    if (!kt.connected) kt.connect();
+    if (!kt.connected()) kt.connect();
 
     return {
       props: {
