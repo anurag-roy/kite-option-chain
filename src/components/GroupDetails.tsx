@@ -1,4 +1,4 @@
-import { groups } from '@/config';
+import { GROUPS } from '@/config';
 import { Dialog, Transition } from '@headlessui/react';
 import { Dispatch, Fragment, SetStateAction } from 'react';
 
@@ -52,7 +52,7 @@ export function GroupDetails({ open, setOpen }: GroupDetailsProps) {
                 Group Details
               </Dialog.Title>
               <div className="grid grid-cols-2 gap-8">
-                {Object.entries(groups).map(([key, values]) => (
+                {Object.entries(GROUPS).map(([key, values]) => (
                   <div
                     key={key}
                     className="px-4 pt-3 pb-6 rounded-xl shadow-sm border border-gray-200 bg-gray-50"

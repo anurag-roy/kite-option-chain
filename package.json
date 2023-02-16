@@ -36,5 +36,6 @@
   },
   "prisma": {
     "schema": "src/prisma/schema.prisma"
-  }
+  },
+  "license": "MIT"
 }

@@ -1,4 +1,4 @@
-import { groups } from '@/config';
+import { GROUPS } from '@/config';
 import { getExpiryOptions, getKeys } from '@/utils/ui';
 import { QuestionMarkCircleIcon } from '@heroicons/react/24/solid';
 import { FormEvent, useState } from 'react';
@@ -6,7 +6,7 @@ import { ComboBoxInput } from './ComboBoxInput';
 import { GroupDetails } from './GroupDetails';
 import { Table } from './Table';
 
-const groupDropdownOptions = getKeys(groups);
+const groupDropdownOptions = getKeys(GROUPS);
 const expiryOptions = getExpiryOptions();
 
 export function Main() {
@@ -26,12 +26,12 @@ export function Main() {
       const formData = new FormData(event.currentTarget);
       const selectedGroup = formData
         .get('group')
-        ?.valueOf() as keyof typeof groups;
+        ?.valueOf() as keyof typeof GROUPS;
       const selectedExpiry = formData.get('expiry')?.valueOf() as string;
 
       setIsSubscribed(true);
       setExpiry(selectedExpiry);
-      setSubscribedStocks(groups[selectedGroup]);
+      setSubscribedStocks(GROUPS[selectedGroup]);
     }
   };
 

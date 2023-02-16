@@ -1,4 +1,5 @@
-export const groups = {
+// Groups and stocks to monitor when that group is selected
+export const GROUPS = {
   'Adani & Tata, Heavy Industries (Private)': [
     'AMBUJACEM',
     'ACC',
@@ -55,4 +56,7 @@ export const groups = {
 // Number of months to show in the expiry dropdown
 export const EXPIRY_OPTION_LENGTH = 3;
 
+// Percentage of LTP to ignore strike prices on both sides
+// e.g. if DIFF_PERCENT is 20% and LTP of the equity instrument is 100,
+// ignore all strikes ranging from 100 - 20% = 80 to 100 + 20% = 120.
 export const DIFF_PERCENT = 20;

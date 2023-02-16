@@ -1,9 +1,9 @@
 import { getKeys } from '@/utils/ui';
 import Database from 'better-sqlite3';
-import { groups } from './config';
+import { GROUPS } from './config';
 import { kc } from './globals';
 
-const allowedStocks = Object.values(groups).flatMap((s) => s);
+const allowedStocks = Object.values(GROUPS).flatMap((s) => s);
 
 const getSqliteType = (key: string, value: any) => {
   if (key === 'instrument_token') return 'INTEGER';
