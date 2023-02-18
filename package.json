@@ -11,6 +11,7 @@
   "dependencies": {
     "@headlessui/react": "^1.7.10",
     "@heroicons/react": "^2.0.15",
+    "@next/font": "^13.1.6",
     "@prisma/client": "^4.10.1",
     "better-sqlite3": "^8.1.0",
     "kiteconnect-ts": "^0.4.3",
