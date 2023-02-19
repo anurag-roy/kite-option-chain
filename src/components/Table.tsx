@@ -2,6 +2,15 @@ import { DIFF_PERCENT } from '@/config';
 import { SocketData, UiInstrument } from '@/types/SocketData';
 import { classNames } from '@/utils/ui';
 import { memo, useEffect, useState } from 'react';
+import { create } from 'zustand';
+
+type State = {
+  instruments: UiInstrument[];
+};
+
+const useInstrumentStore = create<State>((set) => ({
+  instruments: [],
+}));
 
 type TableProps = {
   name: string;
