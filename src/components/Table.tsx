@@ -84,9 +84,9 @@ export const Table = memo(({ name, expiry }: TableProps) => {
         </span>
         <p className="text-sm font-semibold"></p>
       </div>
-      <div className="resize-y max-h-[50vh] bg-white overflow-y-auto shadow ring-1 ring-black ring-opacity-5 rounded-lg">
+      <div className="resize-y max-h-[50vh] bg-white overflow-y-auto ring-1 ring-zinc-200 rounded-lg">
         <table className="min-w-full divide-y divide-zinc-300">
-          <thead className="bg-zinc-50 sticky shadow-sm top-0">
+          <thead className="bg-zinc-50 sticky top-0">
             <tr className="divide-x divide-zinc-200">
               <th scope="col">Strike</th>
               <th scope="col" className="min-w-[5ch]">

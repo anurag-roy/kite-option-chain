@@ -55,7 +55,7 @@ export function GroupDetails({ open, setOpen }: GroupDetailsProps) {
                 {Object.entries(GROUPS).map(([key, values]) => (
                   <div
                     key={key}
-                    className="px-4 pt-3 pb-6 rounded-xl shadow ring-1 ring-black ring-opacity-5"
+                    className="px-4 pt-3 pb-6 rounded-xl bg-zinc-50 ring-1 ring-zinc-200"
                   >
                     <h4 className="text-lg font-bold text-zinc-800 mb-6">
                       {key}

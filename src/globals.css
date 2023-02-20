@@ -6,27 +6,6 @@ div#__next {
   @apply flex flex-col h-screen p-4;
 }
 
-.animated-button {
-  background-image: linear-gradient(
-    45deg,
-    theme('colors.blue.600') 0,
-    theme('colors.blue.400') 50%,
-    theme('colors.blue.600') 100%
-  );
-  transition: background-position 0.4s;
-  background-size: 300% auto;
-  background-position: 0;
-}
-
-.animated-button:active {
-  background: theme('colors.blue.400');
-}
-
-.animated-button:hover,
-.animated-button:focus {
-  background-position: 100%;
-}
-
 table th {
   @apply whitespace-nowrap px-2 py-3.5 text-center text-sm font-semibold text-zinc-900;
 }

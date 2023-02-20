@@ -38,7 +38,7 @@ export function Main() {
   return (
     <main>
       <form
-        className="max-w-5xl mx-auto mt-6 rounded-lg py-6 bg-zinc-50 shadow ring-1 ring-black ring-opacity-5 flex items-end px-4 sm:px-6 lg:px-8 [&>*:first-child]:grow"
+        className="max-w-5xl mx-auto mt-6 rounded-lg py-6 bg-zinc-50 ring-1 ring-zinc-200 flex items-end px-4 sm:px-6 lg:px-8 [&>*:first-child]:grow"
         onSubmit={handleFormSubmit}
       >
         <ComboBoxInput name="group" items={groupDropdownOptions} />
@@ -53,7 +53,7 @@ export function Main() {
         <ComboBoxInput name="expiry" items={expiryOptions} />
         <button
           type="submit"
-          className="ml-auto px-4 py-2 text-base font-medium rounded-full text-white animated-button focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
+          className="ml-auto px-4 py-2 text-base font-medium rounded-full bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
         >
           {isSubscribed ? 'Unsubscribe' : 'Subscribe'}
         </button>
