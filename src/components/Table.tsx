@@ -1,7 +1,51 @@
 import { DIFF_PERCENT } from '@/config';
 import { SocketData, UiInstrument } from '@/types/SocketData';
 import { classNames } from '@/utils/ui';
-import { memo, useEffect, useState } from 'react';
+import { memo, MouseEvent, useEffect, useState } from 'react';
+
+type TableRowProps = {
+  i: UiInstrument;
+};
+
+const TableRow = ({ i }: TableRowProps) => {
+  const adjustedBid = Math.max(0, Number((i.bid - 0.05).toFixed(2)));
+
+  const openOrderModal = (_event: MouseEvent) => {
+    console.log('Clicked', i.instrument_token);
+  };
+
+  return (
+    <tr className="divide-x divide-zinc-200 dark:divide-white/10">
+      <td
+        className={classNames(
+          '-px-4 font-medium',
+          i.instrument_type === 'CE'
+            ? 'bg-yellow-50/50 text-yellow-800 dark:bg-stone-700/10 dark:text-yellow-400'
+            : 'text-zinc-900 dark:bg-zinc-800/10 dark:text-zinc-100'
+        )}
+      >
+        {i.strike} {i.instrument_type}
+      </td>
+      <td
+        className={classNames(
+          'bg-blue-50/60 text-blue-800 dark:bg-blue-900/5 dark:text-blue-500',
+          adjustedBid > 0
+            ? 'cursor-pointer hover:bg-blue-100 hover:dark:bg-blue-900/50'
+            : 'pointer-events-none'
+        )}
+        onClick={openOrderModal}
+      >
+        {i.bid ?? '-'}
+      </td>
+      <td className="bg-red-50/60 text-red-800 dark:bg-red-900/5 dark:text-red-500">
+        {i.ask ?? '-'}
+      </td>
+      <td className="text-zinc-900 dark:bg-zinc-800/10 dark:text-zinc-100">
+        {i.lot_size * adjustedBid}
+      </td>
+    </tr>
+  );
+};
 
 type TableProps = {
   name: string;
@@ -95,6 +139,9 @@ export const Table = memo(({ name, expiry }: TableProps) => {
               <th scope="col" className="min-w-[5ch]">
                 Ask
               </th>
+              <th scope="col" className="min-w-[5ch]">
+                Qty
+              </th>
             </tr>
           </thead>
           <tbody className="text-zinc-900 dark:text-zinc-100 divide-y divide-zinc-200 dark:divide-white/10 bg-white dark:bg-zinc-900 overflow-y-auto">
@@ -104,27 +151,7 @@ export const Table = memo(({ name, expiry }: TableProps) => {
               </tr>
             ) : (
               filteredInstruments.map((i) => (
-                <tr
-                  key={i.instrument_token}
-                  className="divide-x divide-zinc-200 dark:divide-white/10"
-                >
-                  <td
-                    className={classNames(
-                      '-px-4 font-medium',
-                      i.instrument_type === 'CE'
-                        ? 'bg-yellow-50/50 text-yellow-800 dark:bg-stone-700/10 dark:text-yellow-400'
-                        : 'text-zinc-900 dark:bg-zinc-800/10 dark:text-zinc-100'
-                    )}
-                  >
-                    {i.strike} {i.instrument_type}
-                  </td>
-                  <td className="bg-blue-50/60 text-blue-800 dark:bg-blue-900/5 dark:text-blue-500">
-                    {i.bid ?? '-'}
-                  </td>
-                  <td className="bg-red-50/60 text-red-800 dark:bg-red-900/5 dark:text-red-500">
-                    {i.ask ?? '-'}
-                  </td>
-                </tr>
+                <TableRow key={i.instrument_token} i={i} />
               ))
             )}
           </tbody>
