@@ -30,18 +30,18 @@ export function ComboBoxInput({
       onChange={setSelectedItem ? setSelectedItem : undefined}
       className="max-w-sm"
     >
-      <Combobox.Label className="block text-sm font-medium text-gray-700">
+      <Combobox.Label className="block text-sm font-medium text-zinc-700">
         {startCase(name)}
       </Combobox.Label>
       <div className="relative mt-1">
         <Combobox.Input
           name={name}
-          className="w-full rounded-md border border-gray-300 bg-white py-2 pl-3 pr-10 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 sm:text-sm"
+          className="w-full rounded-md border border-zinc-300 bg-white py-2 pl-3 pr-10 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 sm:text-sm"
           onChange={(event) => setQuery(event.target.value)}
         />
         <Combobox.Button className="absolute inset-y-0 right-0 flex items-center rounded-r-md px-2 focus:outline-none">
           <ChevronDownIcon
-            className="h-5 w-5 text-gray-400"
+            className="h-5 w-5 text-zinc-400"
             aria-hidden="true"
           />
         </Combobox.Button>
@@ -55,7 +55,7 @@ export function ComboBoxInput({
                 className={({ active }) =>
                   classNames(
                     'relative cursor-default select-none py-2 pl-3 pr-9',
-                    active ? 'bg-blue-600 text-white' : 'text-gray-900'
+                    active ? 'bg-blue-600 text-white' : 'text-zinc-900'
                   )
                 }
               >

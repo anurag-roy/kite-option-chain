@@ -25,7 +25,7 @@ export function GroupDetails({ open, setOpen }: GroupDetailsProps) {
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
           >
-            <Dialog.Overlay className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
+            <Dialog.Overlay className="fixed inset-0 bg-zinc-500 bg-opacity-75 transition-opacity" />
           </Transition.Child>
 
           {/* This element is to trick the browser into centering the modal contents. */}
@@ -47,7 +47,7 @@ export function GroupDetails({ open, setOpen }: GroupDetailsProps) {
             <div className="relative inline-block align-middle bg-white rounded-lg py-4 px-8 text-left overflow-hidden shadow-xl transform transition-all my-8">
               <Dialog.Title
                 as="h3"
-                className="text-center leading-6 font-semibold text-gray-800 mb-6"
+                className="text-center leading-6 font-semibold text-zinc-800 mb-6"
               >
                 Group Details
               </Dialog.Title>
@@ -55,9 +55,9 @@ export function GroupDetails({ open, setOpen }: GroupDetailsProps) {
                 {Object.entries(GROUPS).map(([key, values]) => (
                   <div
                     key={key}
-                    className="px-4 pt-3 pb-6 rounded-xl shadow-sm border border-gray-200 bg-gray-50"
+                    className="px-4 pt-3 pb-6 rounded-xl shadow-sm border border-zinc-200 bg-zinc-50"
                   >
-                    <h4 className="text-lg font-bold text-gray-800 mb-6">
+                    <h4 className="text-lg font-bold text-zinc-800 mb-6">
                       {key}
                     </h4>
                     <ul className="flex flex-wrap gap-4">

@@ -85,9 +85,9 @@ export const Table = memo(({ name, expiry }: TableProps) => {
         <p className="text-sm font-semibold"></p>
       </div>
       <div className="resize-y max-h-[50vh] bg-white overflow-y-auto shadow ring-1 ring-black ring-opacity-5 rounded-lg">
-        <table className="min-w-full divide-y divide-gray-300">
-          <thead className="bg-gray-50 sticky top-0">
-            <tr className="divide-x divide-gray-200">
+        <table className="min-w-full divide-y divide-zinc-300">
+          <thead className="bg-zinc-50 sticky top-0">
+            <tr className="divide-x divide-zinc-200">
               <th scope="col">Strike</th>
               <th scope="col" className="min-w-[5ch]">
                 Bid
@@ -97,7 +97,7 @@ export const Table = memo(({ name, expiry }: TableProps) => {
               </th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-gray-200 bg-white overflow-y-auto">
+          <tbody className="divide-y divide-zinc-200 bg-white overflow-y-auto">
             {filteredInstruments?.length === 0 ? (
               <tr>
                 <td colSpan={3}>No data to display.</td>
@@ -106,14 +106,14 @@ export const Table = memo(({ name, expiry }: TableProps) => {
               filteredInstruments.map((i) => (
                 <tr
                   key={i.instrument_token}
-                  className="divide-x divide-gray-200"
+                  className="divide-x divide-zinc-200"
                 >
                   <td
                     className={classNames(
-                      '-px-4 font-medium text-gray-900',
+                      '-px-4 font-medium',
                       i.instrument_type === 'CE'
                         ? 'bg-yellow-50 text-yellow-800'
-                        : ''
+                        : 'text-zinc-900'
                     )}
                   >
                     {i.strike} {i.instrument_type}

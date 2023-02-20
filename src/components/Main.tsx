@@ -38,7 +38,7 @@ export function Main() {
   return (
     <main>
       <form
-        className="max-w-5xl mx-auto mt-6 rounded-lg py-6 bg-gray-100 flex items-end px-4 sm:px-6 lg:px-8 [&>*:first-child]:grow"
+        className="max-w-5xl mx-auto mt-6 rounded-lg py-6 bg-zinc-50 flex items-end px-4 sm:px-6 lg:px-8 [&>*:first-child]:grow"
         onSubmit={handleFormSubmit}
       >
         <ComboBoxInput name="group" items={groupDropdownOptions} />
@@ -48,7 +48,7 @@ export function Main() {
           className="p-1 rounded-md mr-auto mb-1 ml-1"
           title="Group Details"
         >
-          <QuestionMarkCircleIcon className="h-6 w-6 text-gray-400 hover:text-gray-600" />
+          <QuestionMarkCircleIcon className="h-6 w-6 text-zinc-400 hover:text-zinc-600" />
         </button>
         <ComboBoxInput name="expiry" items={expiryOptions} />
         <button

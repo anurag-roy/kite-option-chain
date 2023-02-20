@@ -61,9 +61,9 @@ export default function Login({ status, message }: LoginProps) {
             <p className="text-sm font-semibold text-blue-600 uppercase tracking-wide">
               {status}
             </p>
-            <h1 className="mt-4 text-4xl font-bold text-gray-900">{message}</h1>
+            <h1 className="mt-4 text-4xl font-bold text-zinc-900">{message}</h1>
             {status === 'success' && (
-              <p className="mt-2 text-base text-gray-500">
+              <p className="mt-2 text-base text-zinc-500">
                 Please restart the server to use the newly generated token.
               </p>
             )}
