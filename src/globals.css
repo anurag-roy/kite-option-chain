@@ -7,9 +7,9 @@ div#__next {
 }
 
 table th {
-  @apply whitespace-nowrap px-2 py-3.5 text-center text-sm font-semibold text-zinc-900;
+  @apply whitespace-nowrap px-2 py-3.5 text-center text-sm font-semibold text-zinc-900 dark:text-zinc-100;
 }
 
 table td {
-  @apply whitespace-nowrap px-2 py-2 tabular-nums text-center font-medium text-sm text-zinc-900;
+  @apply whitespace-nowrap px-2 py-2 tabular-nums text-center font-medium text-sm text-zinc-900 dark:text-zinc-100;
 }

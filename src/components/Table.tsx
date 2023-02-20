@@ -70,7 +70,7 @@ export const Table = memo(({ name, expiry }: TableProps) => {
 
   return (
     <div>
-      <div className="p-2 flex items-baseline gap-4 text-zinc-900">
+      <div className="p-2 flex items-baseline gap-4 text-zinc-900 dark:text-zinc-200">
         <h3 className="text-xl font-bold">{name}</h3>
         <span className="font-semibold">{ltp}</span>
         <span
@@ -84,10 +84,10 @@ export const Table = memo(({ name, expiry }: TableProps) => {
         </span>
         <p className="text-sm font-semibold"></p>
       </div>
-      <div className="resize-y max-h-[50vh] bg-white overflow-y-auto ring-1 ring-zinc-200 rounded-lg">
-        <table className="min-w-full divide-y divide-zinc-300">
-          <thead className="bg-zinc-50 sticky top-0">
-            <tr className="divide-x divide-zinc-200">
+      <div className="resize-y max-h-[50vh] bg-white dark:bg-zinc-900 overflow-y-auto ring-1 ring-zinc-200 dark:ring-zinc-700 rounded-lg">
+        <table className="min-w-full divide-y divide-zinc-300 dark:divide-white/10">
+          <thead className="bg-zinc-50 dark:bg-zinc-800 sticky top-0">
+            <tr className="divide-x divide-zinc-200 dark:divide-white/10">
               <th scope="col">Strike</th>
               <th scope="col" className="min-w-[5ch]">
                 Bid
@@ -97,7 +97,7 @@ export const Table = memo(({ name, expiry }: TableProps) => {
               </th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-zinc-200 bg-white overflow-y-auto">
+          <tbody className="text-zinc-900 dark:text-zinc-100 divide-y divide-zinc-200 dark:divide-white/10 bg-white dark:bg-zinc-900 overflow-y-auto">
             {filteredInstruments?.length === 0 ? (
               <tr>
                 <td colSpan={3}>No data to display.</td>
@@ -106,22 +106,24 @@ export const Table = memo(({ name, expiry }: TableProps) => {
               filteredInstruments.map((i) => (
                 <tr
                   key={i.instrument_token}
-                  className="divide-x divide-zinc-200"
+                  className="divide-x divide-zinc-200 dark:divide-white/10"
                 >
                   <td
                     className={classNames(
                       '-px-4 font-medium',
                       i.instrument_type === 'CE'
-                        ? 'bg-yellow-50/50 text-yellow-800'
-                        : 'text-zinc-900'
+                        ? 'bg-yellow-50/50 text-yellow-800 dark:bg-stone-700/10 dark:text-yellow-400'
+                        : 'text-zinc-900 dark:bg-zinc-800/10 dark:text-zinc-100'
                     )}
                   >
                     {i.strike} {i.instrument_type}
                   </td>
-                  <td className="bg-blue-50/60 text-blue-800">
+                  <td className="bg-blue-50/60 text-blue-800 dark:bg-blue-900/5 dark:text-blue-500">
                     {i.bid ?? '-'}
                   </td>
-                  <td className="bg-red-50/60 text-red-800">{i.ask ?? '-'}</td>
+                  <td className="bg-red-50/60 text-red-800 dark:bg-red-900/5 dark:text-red-500">
+                    {i.ask ?? '-'}
+                  </td>
                 </tr>
               ))
             )}

@@ -44,10 +44,10 @@ export function GroupDetails({ open, setOpen }: GroupDetailsProps) {
             leaveFrom="opacity-100 translate-y-0 scale-100"
             leaveTo="opacity-0 translate-y-0 scale-95"
           >
-            <div className="relative inline-block align-middle bg-white rounded-lg py-4 px-8 text-left overflow-hidden shadow-xl transform transition-all my-8">
+            <div className="relative inline-block align-middle bg-white dark:bg-zinc-900 rounded-lg py-4 px-8 text-left overflow-hidden shadow-xl transform transition-all my-8">
               <Dialog.Title
                 as="h3"
-                className="text-center leading-6 font-semibold text-zinc-800 mb-6"
+                className="text-center leading-6 font-semibold text-zinc-800 dark:text-zinc-200 mb-6"
               >
                 Group Details
               </Dialog.Title>
@@ -55,16 +55,16 @@ export function GroupDetails({ open, setOpen }: GroupDetailsProps) {
                 {Object.entries(GROUPS).map(([key, values]) => (
                   <div
                     key={key}
-                    className="px-4 pt-3 pb-6 rounded-xl bg-zinc-50 ring-1 ring-zinc-200"
+                    className="px-4 pt-3 pb-6 rounded-xl bg-zinc-50 dark:bg-zinc-800 ring-1 ring-zinc-200 dark:ring-zinc-700"
                   >
-                    <h4 className="text-lg font-bold text-zinc-800 mb-6">
+                    <h4 className="text-lg font-bold text-zinc-800 dark:text-zinc-100 mb-6">
                       {key}
                     </h4>
                     <ul className="flex flex-wrap gap-4">
                       {values.map((v) => (
                         <li
                           key={v}
-                          className="px-2.5 py-0.5 rounded-full text-sm font-semibold border border-blue-500/20 bg-blue-50/50 p-4 leading-6 text-blue-900"
+                          className="px-2.5 py-0.5 rounded-full text-sm font-semibold leading-6 border border-blue-500/20 bg-blue-50/50 p-4 text-blue-900 dark:bg-blue-500/5 dark:text-blue-200"
                         >
                           {v}
                         </li>
