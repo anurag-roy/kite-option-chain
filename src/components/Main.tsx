@@ -38,7 +38,7 @@ export function Main() {
   return (
     <main>
       <form
-        className="max-w-5xl mx-auto mt-6 rounded-lg py-6 bg-zinc-50 flex items-end px-4 sm:px-6 lg:px-8 [&>*:first-child]:grow"
+        className="max-w-5xl mx-auto mt-6 rounded-lg py-6 bg-zinc-50 shadow ring-1 ring-black ring-opacity-5 flex items-end px-4 sm:px-6 lg:px-8 [&>*:first-child]:grow"
         onSubmit={handleFormSubmit}
       >
         <ComboBoxInput name="group" items={groupDropdownOptions} />

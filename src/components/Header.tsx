@@ -12,16 +12,22 @@ export function Header({ status, data }: HeaderProps) {
       <NseLogo />
       <h1 className="text-2xl font-bold text-zinc-900 mr-auto">Option Chain</h1>
       {status === 'authorized' ? (
-        <span className="inline-flex items-center px-4 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-green-700 bg-green-100">
-          <CheckCircleIcon className="-ml-1 mr-2 h-5 w-5" aria-hidden="true" />
+        <span className="inline-flex items-center px-4 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-emerald-800 bg-emerald-50/50 ring-1 ring-inset ring-emerald-700/20">
+          <CheckCircleIcon
+            className="-ml-1 mr-2 h-5 w-5 fill-emerald-600"
+            aria-hidden="true"
+          />
           Logged in ({data})
         </span>
       ) : (
         <a
-          className="inline-flex items-center px-4 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-red-700 bg-red-100 hover:bg-red-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+          className="inline-flex items-center px-4 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-red-800 bg-red-50/50 ring-1 ring-inset ring-red-700/20 hover:bg-red-50 hover:ring-red-700/50"
           href={data}
         >
-          <XCircleIcon className="-ml-1 mr-2 h-5 w-5" aria-hidden="true" />
+          <XCircleIcon
+            className="-ml-1 mr-2 h-5 w-5 fill-red-600"
+            aria-hidden="true"
+          />
           Session expired. Click here to login
         </a>
       )}

@@ -70,7 +70,7 @@ export const Table = memo(({ name, expiry }: TableProps) => {
 
   return (
     <div>
-      <div className="p-2 flex items-baseline gap-4">
+      <div className="p-2 flex items-baseline gap-4 text-zinc-900">
         <h3 className="text-xl font-bold">{name}</h3>
         <span className="font-semibold">{ltp}</span>
         <span
@@ -86,7 +86,7 @@ export const Table = memo(({ name, expiry }: TableProps) => {
       </div>
       <div className="resize-y max-h-[50vh] bg-white overflow-y-auto shadow ring-1 ring-black ring-opacity-5 rounded-lg">
         <table className="min-w-full divide-y divide-zinc-300">
-          <thead className="bg-zinc-50 sticky top-0">
+          <thead className="bg-zinc-50 sticky shadow-sm top-0">
             <tr className="divide-x divide-zinc-200">
               <th scope="col">Strike</th>
               <th scope="col" className="min-w-[5ch]">
@@ -112,14 +112,16 @@ export const Table = memo(({ name, expiry }: TableProps) => {
                     className={classNames(
                       '-px-4 font-medium',
                       i.instrument_type === 'CE'
-                        ? 'bg-yellow-50 text-yellow-800'
+                        ? 'bg-yellow-50/50 text-yellow-800'
                         : 'text-zinc-900'
                     )}
                   >
                     {i.strike} {i.instrument_type}
                   </td>
-                  <td className="bg-blue-50 text-blue-800">{i.bid ?? '-'}</td>
-                  <td className="bg-red-50 text-red-800">{i.ask ?? '-'}</td>
+                  <td className="bg-blue-50/60 text-blue-800">
+                    {i.bid ?? '-'}
+                  </td>
+                  <td className="bg-red-50/60 text-red-800">{i.ask ?? '-'}</td>
                 </tr>
               ))
             )}

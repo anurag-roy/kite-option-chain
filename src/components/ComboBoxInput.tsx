@@ -30,7 +30,7 @@ export function ComboBoxInput({
       onChange={setSelectedItem ? setSelectedItem : undefined}
       className="max-w-sm"
     >
-      <Combobox.Label className="block text-sm font-medium text-zinc-700">
+      <Combobox.Label className="block text-sm font-medium text-zinc-900">
         {startCase(name)}
       </Combobox.Label>
       <div className="relative mt-1">

@@ -55,7 +55,7 @@ export function GroupDetails({ open, setOpen }: GroupDetailsProps) {
                 {Object.entries(GROUPS).map(([key, values]) => (
                   <div
                     key={key}
-                    className="px-4 pt-3 pb-6 rounded-xl shadow-sm border border-zinc-200 bg-zinc-50"
+                    className="px-4 pt-3 pb-6 rounded-xl shadow ring-1 ring-black ring-opacity-5"
                   >
                     <h4 className="text-lg font-bold text-zinc-800 mb-6">
                       {key}
@@ -64,7 +64,7 @@ export function GroupDetails({ open, setOpen }: GroupDetailsProps) {
                       {values.map((v) => (
                         <li
                           key={v}
-                          className="px-2.5 py-0.5 rounded-full bg-blue-100 text-blue-800 text-sm font-semibold"
+                          className="px-2.5 py-0.5 rounded-full text-sm font-semibold border border-blue-500/20 bg-blue-50/50 p-4 leading-6 text-blue-900"
                         >
                           {v}
                         </li>
