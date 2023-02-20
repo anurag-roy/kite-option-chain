@@ -27,7 +27,12 @@ export const socket: NextWebSocketHandler = async (client, req) => {
             tokenMap.delete(token);
           }
         }
-        kt.unsubscribe(tokensToUnsubscribe);
+        kt.send(
+          JSON.stringify({
+            a: 'unsubscribe',
+            v: tokensToUnsubscribe,
+          })
+        );
       });
 
       // Get initial stocks from DB
@@ -78,10 +83,17 @@ export const socket: NextWebSocketHandler = async (client, req) => {
       );
 
       // Only ltp is required for equity instrument
-      kt.setMode('ltp', [equityStock.instrument_token]);
-      kt.setMode(
-        'full',
-        filteredOptionStocks.map((o) => o.instrument_token)
+      kt.send(
+        JSON.stringify({
+          a: 'mode',
+          v: ['ltp', [equityStock.instrument_token]],
+        })
+      );
+      kt.send(
+        JSON.stringify({
+          a: 'mode',
+          v: ['full', filteredOptionStocks.map((o) => o.instrument_token)],
+        })
       );
     }
   }

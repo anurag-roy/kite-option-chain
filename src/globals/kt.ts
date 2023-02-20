@@ -1,15 +1,16 @@
 import env from '@/env.json';
 import { readFileSync } from 'node:fs';
+import { WebSocket } from 'ws';
 import { GlobalRef } from './GlobalRef';
 import { clients, tokenMap } from './maps';
 
-const processTicks = (dataView: DataView) => {
-  const numberOfPackets = dataView.getInt16(0);
+const processTicks = (buffer: Buffer) => {
+  const numberOfPackets = buffer.readInt16BE(0);
   let index = 2;
 
   for (let i = 0; i < numberOfPackets; i++) {
-    const size = dataView.getInt16(index);
-    const token = dataView.getInt32(index);
+    const size = buffer.readInt16BE(index);
+    const token = buffer.readInt32BE(index);
 
     const socketId = tokenMap.get(token);
     if (!socketId) {
@@ -21,25 +22,25 @@ const processTicks = (dataView: DataView) => {
     }
 
     if (size === 8) {
-      socketClient?.send(
-        JSON.stringify({
-          action: 'ltp-update',
-          data: {
-            ltp: dataView.getInt32(index + 6),
-          },
-        })
-      );
+      const message = {
+        action: 'ltp-update',
+        data: {
+          ltp: buffer.readInt32BE(index + 6) / 100,
+        },
+      };
+      console.log('Sending message', message);
+      socketClient?.send(JSON.stringify(message));
     } else if (size === 184) {
-      socketClient?.send(
-        JSON.stringify({
-          action: 'option-update',
-          data: {
-            token: token,
-            bid: dataView.getInt32(index + 70) / 100,
-            ask: dataView.getInt32(index + 130) / 100,
-          },
-        })
-      );
+      const message = {
+        action: 'option-update',
+        data: {
+          token: token,
+          bid: buffer.readInt32BE(index + 70) / 100,
+          ask: buffer.readInt32BE(index + 130) / 100,
+        },
+      };
+      console.log('Sending message', message);
+      socketClient?.send(JSON.stringify(message));
     }
 
     index = index + 2 + size;
@@ -64,13 +65,12 @@ if (!ws.value) {
     };
 
     ws.value.onmessage = (event) => {
-      if (event.data instanceof ArrayBuffer && event.data.byteLength > 2) {
-        const dataView = new DataView(event.data);
-        processTicks(dataView);
+      if (event.data instanceof Buffer && event.data.byteLength > 2) {
+        processTicks(event.data);
       }
     };
   } catch (error) {
-    console.log('Access token not found. Cannot initialize KiteTicker.');
+    console.log('Access token not found. Cannot initialize KiteTicker.', error);
   }
 }
 

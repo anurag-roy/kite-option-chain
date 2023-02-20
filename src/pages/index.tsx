@@ -1,6 +1,6 @@
 import { Header } from '@/components/Header';
 import { Main } from '@/components/Main';
-import { kc, kt } from '@/globals';
+import { kc } from '@/globals';
 import { GetServerSidePropsContext } from 'next';
 import Head from 'next/head';
 
@@ -8,9 +8,6 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   // getProfile call to check if logged in or not
   try {
     const profile = await kc.getProfile();
-
-    // Connect KiteTicker if API call is successful, i.e. token is valid
-    if (!kt.connected()) kt.connect();
 
     return {
       props: {
