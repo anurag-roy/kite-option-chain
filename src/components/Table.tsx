@@ -1,7 +1,8 @@
 import { DIFF_PERCENT } from '@/config';
 import { SocketData, UiInstrument } from '@/types/SocketData';
 import { classNames } from '@/utils/ui';
-import { memo, MouseEvent, useEffect, useState } from 'react';
+import { memo, useEffect, useState } from 'react';
+import { OrderModal } from './OrderModal';
 
 type TableRowProps = {
   i: UiInstrument;
@@ -10,9 +11,7 @@ type TableRowProps = {
 const TableRow = ({ i }: TableRowProps) => {
   const adjustedBid = Math.max(0, Number((i.bid - 0.05).toFixed(2)));
 
-  const openOrderModal = (_event: MouseEvent) => {
-    console.log('Clicked', i.instrument_token);
-  };
+  const [isOrderModalOpen, setIsOrderModalOpen] = useState(false);
 
   return (
     <tr className="divide-x divide-zinc-200 dark:divide-white/10">
@@ -33,7 +32,7 @@ const TableRow = ({ i }: TableRowProps) => {
             ? 'cursor-pointer hover:bg-blue-100 hover:dark:bg-blue-900/50'
             : 'pointer-events-none'
         )}
-        onClick={openOrderModal}
+        onClick={() => setIsOrderModalOpen(true)}
       >
         {i.bid ?? '-'}
       </td>
@@ -43,6 +42,12 @@ const TableRow = ({ i }: TableRowProps) => {
       <td className="text-zinc-900 dark:bg-zinc-800/10 dark:text-zinc-100">
         {i.lot_size * adjustedBid}
       </td>
+      <OrderModal
+        open={isOrderModalOpen}
+        setOpen={setIsOrderModalOpen}
+        i={i}
+        price={adjustedBid}
+      />
     </tr>
   );
 };

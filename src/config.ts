@@ -1,5 +1,6 @@
 // Groups and stocks to monitor when that group is selected
 export const GROUPS = {
+  Test: ['AMBUJACEM'],
   'Adani & Tata, Heavy Industries (Private)': [
     'AMBUJACEM',
     'ACC',

@@ -6,6 +6,13 @@ export const getKeys = <T extends Object>(object: T) =>
 export const classNames = (...classes: (boolean | string)[]) =>
   classes.filter(Boolean).join(' ');
 
+export const getMonthName = (dateString: string) =>
+  new Date(dateString)
+    .toLocaleDateString('en-US', {
+      month: 'short',
+    })
+    .toUpperCase();
+
 const getPaddedMonth = (monthIndex: number) =>
   (monthIndex + 1).toLocaleString('en-US', {
     minimumIntegerDigits: 2,
