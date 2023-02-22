@@ -2,15 +2,15 @@ import { kc } from '@/globals';
 import { NextApiHandler } from 'next';
 
 const handler: NextApiHandler = async (req, res) => {
-  const { price, quantity, tradingsymbol } = req.query;
+  const { price, quantity, tradingsymbol } = req.body;
 
   const orderId = await kc.placeOrder('regular', {
     exchange: 'NSE',
     order_type: 'LIMIT',
-    price: Number(price),
+    price: price,
     product: 'NRML',
-    quantity: Number(quantity),
-    tradingsymbol: tradingsymbol as string,
+    quantity: quantity,
+    tradingsymbol: tradingsymbol,
     transaction_type: 'SELL',
   });
 

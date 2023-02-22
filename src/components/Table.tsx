@@ -42,12 +42,14 @@ const TableRow = ({ i }: TableRowProps) => {
       <td className="text-zinc-900 dark:bg-zinc-800/10 dark:text-zinc-100">
         {i.lot_size * adjustedBid}
       </td>
-      <OrderModal
-        open={isOrderModalOpen}
-        setOpen={setIsOrderModalOpen}
-        i={i}
-        price={adjustedBid}
-      />
+      {isOrderModalOpen && (
+        <OrderModal
+          open={isOrderModalOpen}
+          setOpen={setIsOrderModalOpen}
+          i={i}
+          price={adjustedBid}
+        />
+      )}
     </tr>
   );
 };

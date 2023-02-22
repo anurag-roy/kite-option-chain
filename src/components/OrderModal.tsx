@@ -27,6 +27,26 @@ export function OrderModal({ open, setOpen, i, price }: OrderModalProps) {
     }
   }, [quantity, open]);
 
+  const placeSellOrder = () => {
+    const body = {
+      price: price,
+      quantity: i.lot_size * quantity,
+      tradingsymbol: i.tradingsymbol,
+    };
+    fetch('/api/placeSellOrder', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(body),
+    })
+      .then((_res) => {
+        alert('Order placed successfully!');
+        setOpen(false);
+      })
+      .catch((_err) => alert('Error while placing order'));
+  };
+
   return (
     <Transition.Root show={open} as={Fragment}>
       <Dialog
@@ -95,7 +115,7 @@ export function OrderModal({ open, setOpen, i, price }: OrderModalProps) {
                   </p>
                 </div>
               </div>
-              <div className="max-w-xs mx-auto grid grid-cols-[repeat(5,_auto)] place-items-center gap-x-4 gap-y-2 mb-16">
+              <div className="mx-auto grid grid-cols-[repeat(5,_auto)] place-items-center gap-x-4 gap-y-2 mb-16">
                 <span className="text-sm font-medium text-zinc-700 dark:text-zinc-300">
                   Lot Size
                 </span>
@@ -117,7 +137,7 @@ export function OrderModal({ open, setOpen, i, price }: OrderModalProps) {
                 <input
                   type="number"
                   name="quantity"
-                  className="dark:bg-zinc-800 shadow-sm focus:ring-blue-500 focus:border-blue-500 w-16 font-semibold text-zinc-800 dark:text-zinc-100 border-zinc-300 dark:border-zinc-700 rounded-md"
+                  className="w-36 dark:bg-zinc-800 shadow-sm focus:ring-blue-500 focus:border-blue-500 font-semibold text-center text-zinc-800 dark:text-zinc-100 border-zinc-300 dark:border-zinc-700 rounded-md"
                   value={quantity}
                   onChange={(e) => setQuantity(Number(e.target.value))}
                   min={1}
@@ -131,7 +151,7 @@ export function OrderModal({ open, setOpen, i, price }: OrderModalProps) {
                 <button
                   type="button"
                   className="inline-flex justify-center rounded-full border border-transparent shadow-sm px-6 py-2.5 bg-blue-600 font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 ml-3 w-auto"
-                  onClick={() => setOpen(false)}
+                  onClick={placeSellOrder}
                 >
                   Place Sell Order
                 </button>
