@@ -44,7 +44,7 @@ export const GROUPS = {
     'DELTACORP',
     'BRITANNIA',
     'BATAINDIA',
-    'WHIRLPOOL',
+    'LAURUSLABS',
     'VOLTAS',
     'AUROPHARMA',
     'DIVISLAB',
