@@ -22,7 +22,7 @@ const handler: NextApiHandler = async (req, res) => {
   );
 
   return res.json({
-    total: marginResponse.total.toFixed(2),
+    total: marginResponse.total,
   });
 };
 

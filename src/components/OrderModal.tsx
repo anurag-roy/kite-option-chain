@@ -1,5 +1,5 @@
 import { UiInstrument } from '@/types/SocketData';
-import { getMonthName } from '@/utils/ui';
+import { displayInr, getMonthName } from '@/utils/ui';
 import { Dialog, Transition } from '@headlessui/react';
 import { XMarkIcon } from '@heroicons/react/24/solid';
 import { Dispatch, Fragment, SetStateAction, useEffect, useState } from 'react';
@@ -101,21 +101,21 @@ export function OrderModal({ open, setOpen, i, price }: OrderModalProps) {
                   <XMarkIcon className="h-6 w-6" aria-hidden="true" />
                 </button>
               </Dialog.Title>
-              <div className="max-w-sm mx-auto grid grid-cols-2 gap-6 mb-12">
+              <div className="max-w-sm mx-auto grid grid-cols-[auto,_auto] gap-6 mb-12">
                 <div className="p-4 rounded-md text-emerald-800 bg-emerald-50/50 ring-1 ring-inset ring-emerald-700/20 dark:border-emerald-500/30 dark:bg-emerald-500/5 dark:text-emerald-200">
                   <h4 className="font-semibold text-sm text-emerald-700">
                     Price
                   </h4>
-                  <p className="font-bold text-2xl">₹ {price}</p>
+                  <p className="font-bold text-2xl">{displayInr(price)}</p>
                 </div>
                 <div className="p-4 rounded-md text-red-800 bg-red-50/50 ring-1 ring-inset ring-red-700/20 dark:border-red-500/30 dark:bg-red-500/5 dark:text-red-200">
                   <h4 className="font-semibold text-sm text-red-700">Margin</h4>
                   <p className="font-bold text-2xl">
-                    ₹ {requiredMargin ?? '-'}
+                    {requiredMargin ? displayInr(requiredMargin) : '-'}
                   </p>
                 </div>
               </div>
-              <div className="mx-auto grid grid-cols-[repeat(5,_auto)] place-items-center gap-x-4 gap-y-2 mb-16">
+              <div className="max-w-sm mx-auto grid grid-cols-[repeat(5,_auto)] place-items-center gap-x-4 gap-y-2 mb-16">
                 <span className="text-sm font-medium text-zinc-700 dark:text-zinc-300">
                   Lot Size
                 </span>
@@ -137,7 +137,7 @@ export function OrderModal({ open, setOpen, i, price }: OrderModalProps) {
                 <input
                   type="number"
                   name="quantity"
-                  className="w-36 dark:bg-zinc-800 shadow-sm focus:ring-blue-500 focus:border-blue-500 font-semibold text-center text-zinc-800 dark:text-zinc-100 border-zinc-300 dark:border-zinc-700 rounded-md"
+                  className="w-24 dark:bg-zinc-800 shadow-sm focus:ring-blue-500 focus:border-blue-500 font-semibold text-center text-zinc-800 dark:text-zinc-100 border-zinc-300 dark:border-zinc-700 rounded-md"
                   value={quantity}
                   onChange={(e) => setQuantity(Number(e.target.value))}
                   min={1}

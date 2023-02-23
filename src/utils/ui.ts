@@ -38,3 +38,10 @@ export const getExpiryOptions = () => {
 
   return options;
 };
+
+export const displayInr = (amount: number) =>
+  '₹ ' +
+  new Intl.NumberFormat('en-IN', {
+    maximumFractionDigits: 2,
+    minimumFractionDigits: 2,
+  }).format(amount);
