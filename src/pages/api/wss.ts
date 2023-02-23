@@ -40,9 +40,13 @@ export const socket: NextWebSocketHandler = async (client, req) => {
       const response = await kc.getOHLC([equityStock.id]);
       const ohlcResponse = response[equityStock.id];
       const lowerBound =
-        ((100 - 0.75 * DIFF_PERCENT) * ohlcResponse.last_price) / 100;
+        equityStock.tradingsymbol === 'ADANIENT'
+          ? 0.5 * ohlcResponse.last_price
+          : ((100 - 0.75 * DIFF_PERCENT) * ohlcResponse.last_price) / 100;
       const upperBound =
-        ((100 + 0.75 * DIFF_PERCENT) * ohlcResponse.last_price) / 100;
+        equityStock.tradingsymbol === 'ADANIENT'
+          ? 1.5 * ohlcResponse.last_price
+          : ((100 + 0.75 * DIFF_PERCENT) * ohlcResponse.last_price) / 100;
 
       // Compute filtered stocks to send the scoket client
       const filteredOptionStocks: UiInstrument[] = [];
