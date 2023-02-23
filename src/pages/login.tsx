@@ -1,28 +1,31 @@
 import { NseLogo } from '@/components/NseLogo';
+import env from '@/env.json';
+import { kc, kt } from '@/globals';
+import { writeFileSync } from 'fs';
 import { GetServerSidePropsContext } from 'next';
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const requestToken = context.query.request_token as string | undefined;
 
-  // if (!requestToken) {
-  //   return {
-  //     props: {
-  //       status: 'error' as const,
-  //       message: 'No request token found. Login not successful.',
-  //     },
-  //   };
-  // }
+  if (!requestToken) {
+    return {
+      props: {
+        status: 'error' as const,
+        message: 'No request token found. Login not successful.',
+      },
+    };
+  }
 
   try {
-    // const { access_token } = await kc.generateSession(
-    //   requestToken,
-    //   env.API_SECRET
-    // );
-    // writeFileSync('src/data/accessToken.txt', access_token, 'utf-8');
+    const { access_token } = await kc.generateSession(
+      requestToken,
+      env.API_SECRET
+    );
+    writeFileSync('src/data/accessToken.txt', access_token, 'utf-8');
 
-    //@ts-ignore Update private value of KiteTicker's access_token and then connect again
-    // kt.access_token = access_token;
-    // kt.connect();
+    // @ts-ignore Update private value of KiteTicker's access_token and then connect again
+    kt.access_token = access_token;
+    kt.connect();
 
     return {
       props: {

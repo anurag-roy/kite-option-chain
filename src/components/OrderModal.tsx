@@ -19,7 +19,7 @@ export function OrderModal({ open, setOpen, i, price }: OrderModalProps) {
     if (open) {
       const params = new URLSearchParams();
       params.append('price', price.toString());
-      params.append('quantity', quantity.toString());
+      params.append('quantity', (quantity * i.lot_size).toString());
       params.append('tradingsymbol', i.tradingsymbol);
       fetch('/api/getMargin?' + params.toString())
         .then((res) => res.json())

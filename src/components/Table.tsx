@@ -40,14 +40,14 @@ const TableRow = ({ i }: TableRowProps) => {
         {i.ask ?? '-'}
       </td>
       <td className="text-zinc-900 dark:bg-zinc-800/10 dark:text-zinc-100">
-        {i.lot_size * adjustedBid}
+        {(i.lot_size * adjustedBid).toFixed(2)}
       </td>
       {isOrderModalOpen && (
         <OrderModal
           open={isOrderModalOpen}
           setOpen={setIsOrderModalOpen}
           i={i}
-          price={adjustedBid}
+          price={i.bid}
         />
       )}
     </tr>
@@ -147,7 +147,7 @@ export const Table = memo(({ name, expiry }: TableProps) => {
                 Ask
               </th>
               <th scope="col" className="min-w-[5ch]">
-                Qty
+                Value
               </th>
             </tr>
           </thead>

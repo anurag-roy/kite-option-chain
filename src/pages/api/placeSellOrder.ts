@@ -5,7 +5,7 @@ const handler: NextApiHandler = async (req, res) => {
   const { price, quantity, tradingsymbol } = req.body;
 
   const orderId = await kc.placeOrder('regular', {
-    exchange: 'NSE',
+    exchange: 'NFO',
     order_type: 'LIMIT',
     price: price,
     product: 'NRML',
