@@ -10,6 +10,7 @@ type TableRowProps = {
 
 const TableRow = ({ i }: TableRowProps) => {
   const adjustedBid = Math.max(0, Number((i.bid - 0.05).toFixed(2)));
+  const value = Number((adjustedBid * i.lot_size).toFixed(2));
 
   const [isOrderModalOpen, setIsOrderModalOpen] = useState(false);
 
@@ -39,8 +40,14 @@ const TableRow = ({ i }: TableRowProps) => {
       <td className="bg-red-50/60 text-red-800 dark:bg-red-900/5 dark:text-red-500">
         {i.ask ?? '-'}
       </td>
-      <td className="text-zinc-900 dark:bg-zinc-800/10 dark:text-zinc-100">
-        {(i.lot_size * adjustedBid).toFixed(2)}
+      <td
+        className={classNames(
+          value > 0
+            ? 'bg-emerald-50/60 text-emerald-800 dark:bg-emerald-900/5 dark:text-emerald-500'
+            : 'text-zinc-900 dark:bg-zinc-800/10 dark:text-zinc-100'
+        )}
+      >
+        {value}
       </td>
       {isOrderModalOpen && (
         <OrderModal
@@ -154,7 +161,7 @@ export const Table = memo(({ name, expiry }: TableProps) => {
           <tbody className="text-zinc-900 dark:text-zinc-100 divide-y divide-zinc-200 dark:divide-white/10 bg-white dark:bg-zinc-900 overflow-y-auto">
             {filteredInstruments?.length === 0 ? (
               <tr>
-                <td colSpan={3}>No data to display.</td>
+                <td colSpan={4}>No data to display.</td>
               </tr>
             ) : (
               filteredInstruments.map((i) => (
