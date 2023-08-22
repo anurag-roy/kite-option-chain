@@ -2,6 +2,7 @@ import { DIFF_PERCENT } from '@/config';
 import { SocketData, UiInstrument } from '@/types/SocketData';
 import { classNames } from '@/utils/ui';
 import { memo, useEffect, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { OrderModal } from './OrderModal';
 
 type TableRowProps = {
@@ -49,14 +50,16 @@ const TableRow = ({ i }: TableRowProps) => {
       >
         {value}
       </td>
-      {isOrderModalOpen && (
-        <OrderModal
-          open={isOrderModalOpen}
-          setOpen={setIsOrderModalOpen}
-          i={i}
-          price={i.bid}
-        />
-      )}
+      {isOrderModalOpen &&
+        createPortal(
+          <OrderModal
+            open={isOrderModalOpen}
+            setOpen={setIsOrderModalOpen}
+            i={i}
+            price={i.bid}
+          />,
+          document.body
+        )}
     </tr>
   );
 };

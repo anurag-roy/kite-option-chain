@@ -5,8 +5,8 @@ import { InformationCircleIcon, XMarkIcon } from '@heroicons/react/24/solid';
 import {
   Dispatch,
   Fragment,
-  memo,
   SetStateAction,
+  memo,
   useEffect,
   useState,
 } from 'react';
@@ -72,7 +72,6 @@ export const OrderModal = memo(
     return (
       <Transition.Root show={open} as={Fragment}>
         <Dialog
-          as="td"
           className="fixed z-10 inset-0 overflow-y-auto"
           onClose={setOpen}
         >
@@ -170,6 +169,7 @@ export const OrderModal = memo(
                   <span className="text-sm font-medium text-zinc-500">×</span>
                   <input
                     type="number"
+                    id="quantity"
                     name="quantity"
                     className="w-24 dark:bg-zinc-800 shadow-sm focus:ring-blue-500 focus:border-blue-500 font-semibold text-center text-zinc-800 dark:text-zinc-100 border-zinc-300 dark:border-zinc-700 rounded-md"
                     value={quantity}
