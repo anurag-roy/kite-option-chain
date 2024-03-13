@@ -52,7 +52,7 @@ npm run data:prepare
 
 Start in development mode
 
-```
+```sh
 npm run dev
 ```
 

@@ -5,6 +5,12 @@ export interface UiInstrument extends instrument {
   ask: number;
 }
 
+export interface GroupedUiInstrument {
+  strike: number;
+  CE: UiInstrument | any;
+  PE: UiInstrument | any;
+}
+
 export type SocketData =
   | {
       action: 'init';

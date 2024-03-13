@@ -1,34 +1,45 @@
 import { getKeys } from '@/utils/ui';
 import Database from 'better-sqlite3';
-import { GROUPS } from './config';
-import { kc } from './globals';
+import {GROUPS, INDICES} from './config';
+import {kc} from './globals';
+import { writeFileSync } from 'node:fs';
+import {createExpiryList} from '@/utils/expiry'
 
 const allowedStocks = Object.values(GROUPS).flatMap((s) => s);
+const allowedIndices = Object.values(INDICES).flatMap((s) => s);
 
 const getSqliteType = (key: string, value: any) => {
-  if (key === 'instrument_token') return 'INTEGER';
-  else return typeof value === 'number' ? 'REAL' : 'TEXT';
+    if (key === 'instrument_token') return 'INTEGER';
+    else return typeof value === 'number' ? 'REAL' : 'TEXT';
 };
 
 async function main() {
-  const nseInstruments = await kc.getInstruments(['NSE']);
-  const nfoInstruments = await kc.getInstruments(['NFO']);
+    const nseInstruments = await kc.getInstruments(['NSE']);
+    const nfoInstruments = await kc.getInstruments(['NFO']);
 
-  const instruments = [
-    ...nseInstruments.filter((i) => allowedStocks.includes(i.tradingsymbol)),
-    ...nfoInstruments.filter(
-      (i) => allowedStocks.includes(i.name) && i.segment === 'NFO-OPT'
-    ),
-  ];
+    writeFileSync("nse.json", JSON.stringify(nseInstruments));
+    writeFileSync("nfo.json", JSON.stringify(nfoInstruments));
 
-  const columns = getKeys(instruments[0]);
+    const instruments = [
+        ...nseInstruments.filter((i) => allowedStocks.includes(i.tradingsymbol)),
+        ...nfoInstruments.filter(
+            (i) => [...allowedStocks, ...allowedIndices].includes(i.name) && i.segment === 'NFO-OPT'
+        ),
+        ...nfoInstruments.filter(
+            (i) => [...allowedStocks, ...allowedIndices].includes(i.tradingsymbol) && i.segment === 'NFO-OPT'
+        ),
+    ];
 
-  const TABLE_NAME = 'instrument';
-  const INSERT_BATCH_SIZE = 10000;
+    createExpiryList([...nseInstruments, ...nfoInstruments]);
 
-  // Create DB and table
-  const db = new Database('src/data/data.db');
-  console.log('DB creation successful!');
+    const columns = getKeys(instruments[0]);
+
+    const TABLE_NAME = 'instrument';
+    const INSERT_BATCH_SIZE = 10000;
+
+    // Create DB and table
+    const db = new Database('src/data/data.db');
+    console.log('DB creation successful!');
 
   db.prepare(
     `CREATE TABLE ${TABLE_NAME} (` +
@@ -38,50 +49,59 @@ async function main() {
         .join(',') +
       ');'
   ).run();
+
   console.log('Table creation successful!');
 
-  const insert = (values: string[]) => {
-    if (values.length === 0) return;
-    db.exec(
-      `INSERT INTO ${TABLE_NAME} (id, ${columns.join(
-        ','
-      )}) VALUES ${values.join(',')};`
-    );
-  };
+    const insert = (values: string[]) => {
+        if (values.length === 0) return;
+        db.exec(
+            `INSERT INTO ${TABLE_NAME} (id, ${columns.join(
+                    ','
+            )})
+             VALUES ${values.join(',')};`
+        );
+    };
 
-  // Variables to insert values in batches
-  let currentBatchValues = [];
-  let currentIteration = 0;
+    // Variables to insert values in batches
+    let currentBatchValues = [];
+    let currentIteration = 0;
 
-  console.log('Starting insert...');
-  for (const instrument of instruments) {
-    const currentRowValues = [];
+    console.log('Starting insert...');
+    for (const instrument of instruments) {
+        const currentRowValues = [];
 
-    // Insert primary key Id
-    currentRowValues.push(
-      `'${instrument.exchange}:${instrument.tradingsymbol}'`
-    );
+        // Insert primary key Id
+            // Insert primary key Id
+        currentRowValues.push(
+            `'${instrument.exchange}:${instrument.tradingsymbol}'`
+        );
+  
 
-    for (const col of columns) {
-      let value = instrument[col];
-      value = typeof value === 'object' ? value.toISOString() : value;
-      value = typeof value === 'string' ? `'${value}'` : value;
-      currentRowValues.push(value);
+        for (const col of columns) {
+            let value = instrument[col];
+            value = typeof value === 'object' ? value.toISOString() : value;
+            value = typeof value === 'string' ? `'${value}'` : value;
+            currentRowValues.push(value);
+        }
+        currentBatchValues.push(`(${currentRowValues.join(',')})`);
+
+        // Execute insert statement once a batch is full
+        currentIteration++;
+        if (currentIteration % INSERT_BATCH_SIZE === 0) {
+            insert(currentBatchValues);
+            currentBatchValues = [];
+        }
     }
-    currentBatchValues.push(`(${currentRowValues.join(',')})`);
-
-    // Execute insert statement once a batch is full
-    currentIteration++;
-    if (currentIteration % INSERT_BATCH_SIZE === 0) {
-      insert(currentBatchValues);
-      currentBatchValues = [];
+    // Fire once more for leftover values
+    try {
+        insert(currentBatchValues);
     }
-  }
-  // Fire once more for leftover values
-  insert(currentBatchValues);
-  console.log('Data insertion successful!');
+    catch (e){
+        console.error('Exception', e);
+    }
+    console.log('Data insertion successful!');
 }
 
 main().catch((error) => {
-  console.log('Data preparation failed', error);
+    console.log('Data preparation failed', error);
 });

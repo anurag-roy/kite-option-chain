@@ -1,13 +1,14 @@
 import { DIFF_PERCENT } from '@/config';
 import { clients, kc, kt, tokenMap } from '@/globals';
 import { UiInstrument } from '@/types/SocketData';
-import { getInstrumentsToSubscribe } from '@/utils/db';
+import { getEquityInstrumentsToSubscribe, getOptionInstrumentsToSubscribe } from '@/utils/db';
+import { mapIndexOptionsExpiry } from '@/utils/expiry';
 import { NextApiHandler } from 'next';
 import { NextWebSocketHandler } from 'next-plugin-websocket';
 
 export const socket: NextWebSocketHandler = async (client, req) => {
   if (req.url) {
-    const url = new URL(req.url, 'http://localhost:8000');
+    const url = new URL(req.url, 'http://localhost:9000');
     const name = url.searchParams.get('name');
     const expiry = url.searchParams.get('expiry');
 
@@ -30,11 +31,13 @@ export const socket: NextWebSocketHandler = async (client, req) => {
         kt.unsubscribe(tokensToUnsubscribe);
       });
 
-      // Get initial stocks from DB
-      const { equityStock, optionsStocks } = await getInstrumentsToSubscribe(
-        name,
-        expiry
-      );
+
+      const {equityStock } = await getEquityInstrumentsToSubscribe(name, expiry);
+
+      const {mappedName , mappedExpiry } = mapIndexOptionsExpiry(name, expiry);
+      const {optionsStocks } = await getOptionInstrumentsToSubscribe(mappedName, mappedExpiry);
+
+
 
       // Get LTP to calculate lower bound and upper bound
       const response = await kc.getOHLC([equityStock.id]);
@@ -42,20 +45,17 @@ export const socket: NextWebSocketHandler = async (client, req) => {
       const lowerBound =
         equityStock.tradingsymbol === 'ADANIENT'
           ? 0.5 * ohlcResponse.last_price
-          : ((100 - 0.75 * DIFF_PERCENT) * ohlcResponse.last_price) / 100;
+          : ((100 - DIFF_PERCENT) * ohlcResponse.last_price) / 100;
       const upperBound =
         equityStock.tradingsymbol === 'ADANIENT'
           ? 1.5 * ohlcResponse.last_price
-          : ((100 + 0.75 * DIFF_PERCENT) * ohlcResponse.last_price) / 100;
+          : ((100 + DIFF_PERCENT) * ohlcResponse.last_price) / 100;
 
       // Compute filtered stocks to send the scoket client
       const filteredOptionStocks: UiInstrument[] = [];
       const optionStocksToSubscribe: number[] = [];
       for (const stock of optionsStocks) {
-        if (
-          (stock.strike <= lowerBound && stock.instrument_type === 'PE') ||
-          (stock.strike >= upperBound && stock.instrument_type === 'CE')
-        ) {
+        if ( stock.strike >= lowerBound && stock.strike <= upperBound ) {
           filteredOptionStocks.push({
             ...stock,
             bid: 0,
@@ -66,6 +66,7 @@ export const socket: NextWebSocketHandler = async (client, req) => {
           optionStocksToSubscribe.push(stock.instrument_token);
         }
       }
+      console.log(`Stock ${mappedName}, price ${ohlcResponse.last_price}, lb ${lowerBound}, up ${upperBound} osc ${filteredOptionStocks.length}`);
       // Store the equity instrument as well
       tokenMap.set(equityStock.instrument_token, name);
 

@@ -3,9 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev -p 8000",
+    "dev": "next dev -p 9000",
     "build": "next build",
-    "start": "next start -p 8000",
+    "start": "next start -p 9000",
     "data:prepare": "rimraf src/data/data.db && tsx src/setupDb.ts"
   },
   "dependencies": {
@@ -20,6 +20,7 @@
     "next": "13.1.6",
     "next-plugin-websocket": "^0.1.2",
     "next-themes": "^0.2.1",
+    "query": "^0.2.0",
     "react": "18.2.0",
     "react-dom": "18.2.0"
   },

@@ -8,9 +8,9 @@ datasource db {
 }
 
 model instrument {
-  id               String @id
+  id               String 
   instrument_token Int
-  exchange_token   String
+  exchange_token   String @id
   tradingsymbol    String
   name             String
   last_price       Float
