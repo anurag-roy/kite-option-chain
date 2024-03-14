@@ -133,7 +133,7 @@ export const Table = memo(({ name, expiry }: TableProps) => {
     <div>
       <div className="p-2 flex items-baseline gap-4 text-zinc-900 dark:text-zinc-200">
         <h3 className="text-xl font-bold">{name}</h3>
-        <span className="font-semibold">{ltp}</span>
+        <span className="font-semibold">{ltp.toFixed(2)}</span>
         <span
           className={classNames(
             'text-sm font-semibold',

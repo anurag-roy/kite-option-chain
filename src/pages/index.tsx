@@ -19,7 +19,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
       },
     };
   } catch (error) {
-    console.log('Access token expired or not set.');
+    console.log('Access token expired or not set.', error);
     const loginUrl = kc.getLoginURL();
     return {
       props: {
